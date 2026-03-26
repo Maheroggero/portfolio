@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mahe Roggero</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:     #FFFFFF;
+      --ink:    #141412;
+      --gray:   #8A8A87;
+      --border: #E2E1DC;
+      --f:      'DM Sans', system-ui, sans-serif;
+      --pad:    22px;
+      --gap:    14px;
+    }
+
+    html, body {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: var(--f);
+      font-size: 13px;
+      font-weight: 400;
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a { text-decoration: none; color: inherit; }
+
+    /* ── PAGE LAYOUT ─────────────────────────────────── */
+    .page {
+      display: flex;
+      flex-direction: column;
+      width: 100vw;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    /* ── NEGATIVE SPACE ──────────────────────────────── */
+    .negative-space {
+      flex: 1;
+      min-height: 0;
+    }
+
+    /* ── HEADER ──────────────────────────────────────── */
+    .site-header {
+      display: grid;
+      grid-template-columns: clamp(180px, 29vw, 420px) 1fr;
+      align-items: center;
+      padding: 18px clamp(24px, 4vw, 56px);
+      flex-shrink: 0;
+      background: transparent;
+      will-change: transform;
+    }
+
+    .logo {
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 0.01em;
+      color: var(--ink);
+      transition: opacity 0.2s;
+    }
+
+    .logo:hover { opacity: 0.5; }
+
+    /* ── CUSTOM CURSOR ────────────────────────────── */
+    @media (hover: hover) {
+      *, a, button { cursor: none !important; }
+
+      #c-dot {
+        position: fixed; top: 0; left: 0;
+        width: 5px; height: 5px; margin: -2.5px 0 0 -2.5px;
+        background: var(--ink);
+        border-radius: 50%;
+        pointer-events: none; z-index: 9999;
+        will-change: transform;
+        transition: opacity 0.2s;
+      }
+
+      #c-ring-wrap {
+        position: fixed; top: 0; left: 0;
+        pointer-events: none; z-index: 9998;
+        will-change: transform;
+      }
+
+      #c-ring {
+        width: 32px; height: 32px; margin: -16px 0 0 -16px;
+        border: 1px solid rgba(20,20,18,0.55);
+        border-radius: 50%;
+        display: flex; align-items: center; justify-content: center;
+        transition: width 0.38s cubic-bezier(0.25,0,0.1,1),
+                    height 0.38s cubic-bezier(0.25,0,0.1,1),
+                    margin 0.38s cubic-bezier(0.25,0,0.1,1),
+                    background 0.38s,
+                    border-color 0.38s,
+                    opacity 0.2s;
+      }
+
+      #c-ring.is-link {
+        width: 16px; height: 16px; margin: -8px 0 0 -8px;
+        background: var(--ink); border-color: var(--ink);
+      }
+
+      #c-ring.is-view {
+        width: 62px; height: 62px; margin: -31px 0 0 -31px;
+        background: var(--ink); border-color: var(--ink);
+      }
+
+      #c-ring .c-label {
+        font-family: 'DM Sans', sans-serif;
+        font-size: 9px; font-weight: 400; letter-spacing: 0.12em;
+        text-transform: uppercase; color: #FFFFFF;
+        opacity: 0; transition: opacity 0.28s;
+        user-select: none; pointer-events: none;
+      }
+
+      #c-ring.is-view .c-label { opacity: 1; }
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 28px;
+    }
+
+    .nav-links a {
+      font-size: 13px;
+      font-weight: 400;
+      color: var(--gray);
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: var(--ink); }
+
+    /* ── CAROUSEL WRAPPER ────────────────────────────── */
+    .carousel-wrapper {
+      position: relative;
+      width: 100vw;
+      height: 50vh;
+      overflow: hidden;
+      cursor: grab;
+      flex-shrink: 0;
+    }
+
+    .carousel-wrapper.dragging {
+      cursor: grabbing;
+    }
+
+    @media (hover: hover) {
+      .carousel-wrapper,
+      .carousel-wrapper.dragging { cursor: none; }
+    }
+
+    /* ── TRACK ───────────────────────────────────────── */
+    .carousel-track {
+      display: flex;
+      align-items: stretch;
+      height: 100%;
+      gap: var(--gap);
+      will-change: transform;
+    }
+
+    .carousel-track img {
+      height: 100%;
+      width: auto;
+      object-fit: cover;
+      display: block;
+      flex-shrink: 0;
+      user-select: none;
+      -webkit-user-drag: none;
+    }
+    .carousel-track picture { display: contents; }
+
+    /* ── RESPONSIVE ──────────────────────────────── */
+    @media (max-width: 768px) {
+      #c-dot, #c-ring-wrap { display: none; }
+
+      .site-header {
+        grid-template-columns: 1fr auto;
+      }
+
+      .carousel-track img {
+        width: 65vw;
+        height: 100%;
+      }
+    }
+
+  </style>
+</head>
+<body>
+  <div id="c-dot"></div>
+  <div id="c-ring-wrap"><div id="c-ring"><span class="c-label">View</span></div></div>
+
+  <div class="page">
+
+    <div class="negative-space"></div>
+
+    <header class="site-header">
+      <a href="index.html" class="logo">Mahe Roggero</a>
+      <nav class="nav-links">
+        <a href="projects.html">Projects</a>
+        <a href="about.html">About</a>
+      </nav>
+    </header>
+
+    <div class="carousel-wrapper" id="wrapper">
+      <div class="carousel-track" id="track">
+        <!-- Set 1 — with data-href for click navigation -->
+        <picture>
+          <source srcset="images/tokyo.webp" type="image/webp">
+          <img src="images/tokyo.png"        data-href="tokyo.html"        alt="Tokyo">
+        </picture>
+        <picture>
+          <source srcset="images/prada.webp" type="image/webp">
+          <img src="images/prada.jpg"        data-href="prada.html"        alt="Prada">
+        </picture>
+        <picture>
+          <source srcset="images/nike.webp" type="image/webp">
+          <img src="images/nike.jpg"         data-href="nike.html"         alt="Nike">
+        </picture>
+        <picture>
+          <source srcset="images/oakley.webp" type="image/webp">
+          <img src="images/oakley.png"       data-href="oakley.html"       alt="Oakley">
+        </picture>
+        <picture>
+          <source srcset="images/morocco.webp" type="image/webp">
+          <img src="images/morocco.jpg"      data-href="morocco.html"      alt="Morocco">
+        </picture>
+        <picture>
+          <source srcset="images/bold-agency.webp" type="image/webp">
+          <img src="images/bold-agency.jpg"  data-href="bold-agency.html"  alt="Bold Agency">
+        </picture>
+        <picture>
+          <source srcset="images/photography.webp" type="image/webp">
+          <img src="images/photography.jpg"  data-href="photography.html"  alt="Photography">
+        </picture>
+        <picture>
+          <source srcset="images/vecchia.webp" type="image/webp">
+          <img src="images/vecchia.png"      data-href="vecchia.html"      alt="Vecchia">
+        </picture>
+        <picture>
+          <source srcset="images/tam.webp" type="image/webp">
+          <img src="images/tam.jpg"          data-href="tam.html"          alt="TAM">
+        </picture>
+        <!-- Set 2 — clones, no data-href -->
+        <picture>
+          <source srcset="images/tokyo.webp" type="image/webp">
+          <img src="images/tokyo.png"        alt="">
+        </picture>
+        <picture>
+          <source srcset="images/prada.webp" type="image/webp">
+          <img src="images/prada.jpg"        alt="">
+        </picture>
+        <picture>
+          <source srcset="images/nike.webp" type="image/webp">
+          <img src="images/nike.jpg"         alt="">
+        </picture>
+        <picture>
+          <source srcset="images/oakley.webp" type="image/webp">
+          <img src="images/oakley.png"       alt="">
+        </picture>
+        <picture>
+          <source srcset="images/morocco.webp" type="image/webp">
+          <img src="images/morocco.jpg"      alt="">
+        </picture>
+        <picture>
+          <source srcset="images/bold-agency.webp" type="image/webp">
+          <img src="images/bold-agency.jpg"  alt="">
+        </picture>
+        <picture>
+          <source srcset="images/photography.webp" type="image/webp">
+          <img src="images/photography.jpg"  alt="">
+        </picture>
+        <picture>
+          <source srcset="images/vecchia.webp" type="image/webp">
+          <img src="images/vecchia.png"      alt="">
+        </picture>
+        <picture>
+          <source srcset="images/tam.webp" type="image/webp">
+          <img src="images/tam.jpg"          alt="">
+        </picture>
+        <!-- Set 3 — clones, no data-href -->
+        <picture>
+          <source srcset="images/tokyo.webp" type="image/webp">
+          <img src="images/tokyo.png"        alt="">
+        </picture>
+        <picture>
+          <source srcset="images/prada.webp" type="image/webp">
+          <img src="images/prada.jpg"        alt="">
+        </picture>
+        <picture>
+          <source srcset="images/nike.webp" type="image/webp">
+          <img src="images/nike.jpg"         alt="">
+        </picture>
+        <picture>
+          <source srcset="images/oakley.webp" type="image/webp">
+          <img src="images/oakley.png"       alt="">
+        </picture>
+        <picture>
+          <source srcset="images/morocco.webp" type="image/webp">
+          <img src="images/morocco.jpg"      alt="">
+        </picture>
+        <picture>
+          <source srcset="images/bold-agency.webp" type="image/webp">
+          <img src="images/bold-agency.jpg"  alt="">
+        </picture>
+        <picture>
+          <source srcset="images/photography.webp" type="image/webp">
+          <img src="images/photography.jpg"  alt="">
+        </picture>
+        <picture>
+          <source srcset="images/vecchia.webp" type="image/webp">
+          <img src="images/vecchia.png"      alt="">
+        </picture>
+        <picture>
+          <source srcset="images/tam.webp" type="image/webp">
+          <img src="images/tam.jpg"          alt="">
+        </picture>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    /* ── CUSTOM CURSOR ───────────────────────────────── */
+    (function(){
+      var d = document.getElementById('c-dot');
+      var w = document.getElementById('c-ring-wrap');
+      var r = document.getElementById('c-ring');
+      if (!d || !w || window.matchMedia('(hover: none)').matches) return;
+
+      var mx = -100, my = -100, rx = -100, ry = -100;
+
+      document.addEventListener('mousemove', function(e){ mx = e.clientX; my = e.clientY; });
+      document.addEventListener('mouseleave', function(){ d.style.opacity='0'; w.style.opacity='0'; });
+      document.addEventListener('mouseenter', function(){ d.style.opacity='1'; w.style.opacity='1'; });
+
+      document.querySelectorAll('a, button').forEach(function(el){
+        el.addEventListener('mouseenter', function(){ r.classList.add('is-link'); d.style.opacity='0'; });
+        el.addEventListener('mouseleave', function(){ r.classList.remove('is-link'); d.style.opacity='1'; });
+      });
+
+      document.querySelectorAll('.carousel-wrapper').forEach(function(el){
+        el.addEventListener('mouseenter', function(){ r.classList.add('is-view'); r.classList.remove('is-link'); d.style.opacity='0'; });
+        el.addEventListener('mouseleave', function(){ r.classList.remove('is-view'); d.style.opacity='1'; });
+      });
+
+      function tick(){
+        rx += (mx - rx) * 0.1;
+        ry += (my - ry) * 0.1;
+        d.style.transform = 'translate('+mx+'px,'+my+'px)';
+        w.style.transform = 'translate('+rx+'px,'+ry+'px)';
+        requestAnimationFrame(tick);
+      }
+      requestAnimationFrame(tick);
+    })();
+  </script>
+
+  <script>
+    const track   = document.getElementById('track');
+    const wrapper = document.getElementById('wrapper');
+
+    const SPEED    = 0.38;   // px per frame
+    const GAP      = 14;     // matches CSS --gap
+    const SET_SIZE = 9;
+
+    let pos         = 0;
+    let setWidth    = 0;
+    let initialized = false;
+
+    // Drag state
+    let isDragging        = false;
+    let dragStartX        = 0;
+    let dragStartY        = 0;
+    let dragStartPos      = 0;
+    let totalDragDistance = 0;
+    let lastDragX         = 0;
+    let lastDragTime      = 0;
+    const velSamples      = [];  // rolling velocity average
+
+    /* ── Measure width of one image set ────────────── */
+    function measureSet() {
+      const imgs = track.querySelectorAll('img');
+      let w = 0;
+      for (let i = 0; i < SET_SIZE; i++) {
+        w += imgs[i].offsetWidth + GAP;
+      }
+      setWidth = w;
+    }
+
+    /* ── Wrap position for infinite loop ────────────── */
+    function wrap() {
+      if (setWidth <= 0) return;
+      pos = ((pos % setWidth) + setWidth) % setWidth;
+    }
+
+    /* ── Animation loop ─────────────────────────────── */
+    function tick() {
+      if (!isDragging) {
+        pos += SPEED;
+        wrap();
+        track.style.transform = `translateX(-${pos}px)`;
+      }
+      requestAnimationFrame(tick);
+    }
+
+    /* ── Click & Drag ────────────────────────────────── */
+    wrapper.addEventListener('mousedown', (e) => {
+      isDragging        = true;
+      dragStartX        = e.clientX;
+      dragStartY        = e.clientY;
+      dragStartPos      = pos;
+      totalDragDistance = 0;
+      lastDragX         = e.clientX;
+      lastDragTime      = Date.now();
+      velSamples.length = 0;
+      wrapper.classList.add('dragging');
+      e.preventDefault();
+    });
+
+    window.addEventListener('mousemove', (e) => {
+      if (!isDragging) return;
+
+      const delta = dragStartX - e.clientX;
+      pos = dragStartPos + delta;
+      wrap();
+      track.style.transform = `translateX(-${pos}px)`;
+
+      // Accumulate total distance (for click detection)
+      totalDragDistance += Math.abs(e.clientX - lastDragX);
+
+      // Rolling velocity sample (px/ms)
+      const now = Date.now();
+      const dt  = now - lastDragTime;
+      if (dt > 0) {
+        const v = (lastDragX - e.clientX) / dt;
+        velSamples.push(v);
+        if (velSamples.length > 4) velSamples.shift();
+      }
+      lastDragX    = e.clientX;
+      lastDragTime = now;
+    });
+
+    window.addEventListener('mouseup', (e) => {
+      if (!isDragging) return;
+      isDragging = false;
+      wrapper.classList.remove('dragging');
+
+      // Click detection: negligible movement = navigate
+      if (totalDragDistance < 6) {
+        const el  = document.elementFromPoint(dragStartX, dragStartY);
+        const img = el?.tagName === 'IMG' ? el : null;
+        const href = img?.dataset?.href;
+        if (href) {
+          window.location.href = href;
+          return;
+        }
+      }
+
+      // Momentum — rolling average velocity for smooth feel
+      const avgVel = velSamples.length
+        ? velSamples.reduce((a, b) => a + b, 0) / velSamples.length
+        : 0;
+      let velocity = avgVel * 22;
+
+      const applyMomentum = () => {
+        if (Math.abs(velocity) > 0.05) {
+          pos += velocity;
+          wrap();
+          track.style.transform = `translateX(-${pos}px)`;
+          velocity *= 0.95;
+          requestAnimationFrame(applyMomentum);
+        }
+      };
+      applyMomentum();
+    });
+
+    /* ── Touch support ───────────────────────────────── */
+    let touchX = 0;
+    wrapper.addEventListener('touchstart', (e) => {
+      touchX = e.touches[0].clientX;
+    }, { passive: true });
+
+    wrapper.addEventListener('touchmove', (e) => {
+      const dx = touchX - e.touches[0].clientX;
+      touchX = e.touches[0].clientX;
+      pos += dx;
+      wrap();
+      track.style.transform = `translateX(-${pos}px)`;
+    }, { passive: true });
+
+    /* ── Boot ────────────────────────────────────────── */
+    window.addEventListener('load', () => {
+      measureSet();
+      initialized = true;
+      requestAnimationFrame(tick);
+    });
+
+    setTimeout(() => {
+      if (!initialized) {
+        measureSet();
+        initialized = true;
+        requestAnimationFrame(tick);
+      }
+    }, 1500);
+  </script>
+
+  <script>
+    // ── PAGE TRANSITION — HOME ──────────────────────────────
+    (function() {
+      var header  = document.querySelector('.site-header');
+      var content = document.querySelector('.carousel-wrapper');
+
+      function exitTo(url) {
+        var dist = header.getBoundingClientRect().top;
+        sessionStorage.setItem('vt-from', 'home');
+        sessionStorage.setItem('vt-header-top', dist);
+        sessionStorage.setItem('vt-nav-animated', '1');
+        header.style.transition  = 'transform 0.5s cubic-bezier(0.25, 0, 0.1, 1)';
+        header.style.transform   = 'translateY(-' + dist + 'px)';
+        content.style.transition = 'opacity 0.5s ease';
+        content.style.opacity    = '0';
+        setTimeout(function() { window.location.href = url; }, 520);
+      }
+
+      // ENTRANCE : venant de projects ou about
+      var from = sessionStorage.getItem('vt-from');
+      if (from === 'projects' || from === 'about') {
+        sessionStorage.removeItem('vt-from');
+        var navAnimatedReturn = sessionStorage.getItem('vt-nav-animated-return');
+        sessionStorage.removeItem('vt-nav-animated-return');
+
+        if (navAnimatedReturn) {
+          // Nav déjà descendu côté exit → juste fade in contenu
+          content.style.opacity = '0';
+          requestAnimationFrame(function() { requestAnimationFrame(function() {
+            content.style.transition = 'opacity 0.7s ease';
+            content.style.opacity    = '1';
+          }); });
+        } else {
+          // Fallback : animation originale ralentie
+          var dist = header.getBoundingClientRect().top;
+          header.style.transition  = 'none';
+          header.style.transform   = 'translateY(-' + dist + 'px)';
+          content.style.opacity    = '0';
+          requestAnimationFrame(function() { requestAnimationFrame(function() {
+            header.style.transition  = 'transform 0.65s cubic-bezier(0.25, 0, 0.1, 1)';
+            header.style.transform   = 'translateY(0)';
+            content.style.transition = 'opacity 0.7s ease 0.2s';
+            content.style.opacity    = '1';
+          }); });
+        }
+      }
+
+      // EXIT : vers projects
+      var projLink = document.querySelector('a[href="projects.html"]');
+      if (projLink) projLink.addEventListener('click', function(e) { e.preventDefault(); exitTo('projects.html'); });
+
+      // EXIT : vers about
+      var aboutLink = document.querySelector('a[href="about.html"]');
+      if (aboutLink) aboutLink.addEventListener('click', function(e) { e.preventDefault(); exitTo('about.html'); });
+    })();
+  </script>
+
+</body>
+</html>

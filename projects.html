@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Projects — Mahe Roggero</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:     #FFFFFF;
+      --ink:    #141412;
+      --gray:   #8A8A87;
+      --border: #E2E1DC;
+      --f:      'DM Sans', system-ui, sans-serif;
+    }
+
+    html {
+      scrollbar-gutter: stable;
+    }
+
+    html, body {
+      background: var(--bg);
+      color: var(--ink);
+      font-family: var(--f);
+      font-size: 13px;
+      font-weight: 400;
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a { text-decoration: none; color: inherit; }
+
+    /* ── NAV ───────────────────────────────────── */
+    nav {
+      display: grid;
+      grid-template-columns: clamp(180px, 29vw, 420px) 1fr;
+      align-items: center;
+      padding: 18px clamp(24px, 4vw, 56px);
+      position: sticky;
+      top: 0;
+      background: transparent;
+      z-index: 10;
+      will-change: transform;
+    }
+
+    .logo {
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 0.01em;
+      transition: opacity 0.2s;
+    }
+    .logo:hover { opacity: 0.4; }
+
+    /* ── CUSTOM CURSOR ────────────────────────────── */
+    @media (hover: hover) {
+      *, a, button { cursor: none !important; }
+
+      #c-dot {
+        position: fixed; top: 0; left: 0;
+        width: 5px; height: 5px; margin: -2.5px 0 0 -2.5px;
+        background: var(--ink);
+        border-radius: 50%;
+        pointer-events: none; z-index: 9999;
+        will-change: transform;
+        transition: opacity 0.2s;
+      }
+
+      #c-ring-wrap {
+        position: fixed; top: 0; left: 0;
+        pointer-events: none; z-index: 9998;
+        will-change: transform;
+      }
+
+      #c-ring {
+        width: 32px; height: 32px; margin: -16px 0 0 -16px;
+        border: 1px solid rgba(20,20,18,0.55);
+        border-radius: 50%;
+        display: flex; align-items: center; justify-content: center;
+        transition: width 0.38s cubic-bezier(0.25,0,0.1,1),
+                    height 0.38s cubic-bezier(0.25,0,0.1,1),
+                    margin 0.38s cubic-bezier(0.25,0,0.1,1),
+                    background 0.38s,
+                    border-color 0.38s,
+                    opacity 0.2s;
+      }
+
+      #c-ring.is-link {
+        width: 16px; height: 16px; margin: -8px 0 0 -8px;
+        background: var(--ink); border-color: var(--ink);
+      }
+
+      #c-ring.is-view {
+        width: 62px; height: 62px; margin: -31px 0 0 -31px;
+        background: var(--ink); border-color: var(--ink);
+      }
+
+      #c-ring .c-label {
+        font-family: 'DM Sans', sans-serif;
+        font-size: 9px; font-weight: 400; letter-spacing: 0.12em;
+        text-transform: uppercase; color: #FFFFFF;
+        opacity: 0; transition: opacity 0.28s;
+        user-select: none; pointer-events: none;
+      }
+
+      #c-ring.is-view .c-label { opacity: 1; }
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 28px;
+      justify-self: start;
+    }
+
+    .nav-links a {
+      font-size: 13px;
+      font-weight: 400;
+      color: var(--gray);
+      transition: color 0.2s;
+    }
+    .nav-links a:hover,
+    .nav-links a.active { color: var(--ink); }
+
+    /* ── NEGATIVE SPACE ─────────────────────────── */
+    .spacer {
+      height: 30vh;
+    }
+
+    /* ── BODY LAYOUT ────────────────────────────── */
+    .body-layout {
+      display: grid;
+      grid-template-columns: clamp(180px, 29vw, 420px) 1fr;
+      padding: 0 32px clamp(80px, 12vw, 140px) clamp(24px, 4vw, 56px);
+      gap: 0;
+    }
+
+    /* ── SIDEBAR ─────────────────────────────────── */
+    .sidebar {
+      padding-top: 2px;
+      position: sticky;
+      top: calc(18px + 13px + 18px + 30vh);
+      align-self: start;
+      height: 0;
+    }
+
+    .sidebar-label {
+      font-size: 13px;
+      font-weight: 400;
+      letter-spacing: 0.02em;
+      color: var(--gray);
+      line-height: 1.6;
+    }
+
+    /* ── PROJECTS GRID ───────────────────────────── */
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      column-gap: clamp(10px, 1.2vw, 16px);
+      row-gap: clamp(16px, 2vw, 24px);
+    }
+
+    /* ── PROJECT CARD ─────────────────────────────── */
+    .project {
+      display: block;
+      cursor: pointer;
+    }
+
+    .project-img {
+      position: relative;
+      overflow: hidden;
+      background: #F0EFE9;
+    }
+
+    .project-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .project-img picture { display: contents; }
+
+    .img-a {
+      position: relative;
+      z-index: 1;
+      transition: opacity 0.45s ease;
+    }
+
+    .img-b {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: 2;
+      opacity: 0;
+      transition: opacity 0.45s ease;
+    }
+
+    .project:hover .img-b {
+      opacity: 1;
+    }
+
+    /* slightly wider than square */
+    .project-img { aspect-ratio: 5/4; }
+
+    /* ── PROJECT LABEL ───────────────────────────── */
+    .project-label {
+      padding-top: 8px;
+    }
+
+    .project-name {
+      display: block;
+      font-size: 12px;
+      font-weight: 400;
+      color: var(--ink);
+      line-height: 1.4;
+    }
+
+    .project-type {
+      display: block;
+      font-size: 11px;
+      font-weight: 300;
+      color: var(--gray);
+      line-height: 1.5;
+      margin-top: 1px;
+    }
+
+    /* ── ANIMATIONS ─────────────────────────────── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(14px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .sidebar-label,
+    .project {
+      opacity: 0;
+    }
+
+    .sidebar-label.visible {
+      animation: fadeUp 0.65s cubic-bezier(0.25, 0, 0.1, 1) both;
+    }
+
+    .project.visible {
+      animation: fadeUp 0.65s cubic-bezier(0.25, 0, 0.1, 1) both;
+    }
+
+    /* ── RESPONSIVE ──────────────────────────────── */
+    @media (max-width: 1200px) {
+      .projects-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    @media (max-width: 900px) {
+      .sidebar { position: static; height: auto; padding-bottom: 16px; }
+      .body-layout { grid-template-columns: 1fr; }
+      .projects-grid { grid-template-columns: repeat(2, 1fr); }
+      nav { grid-template-columns: 1fr auto; }
+    }
+
+    @media (max-width: 580px) {
+      .projects-grid { grid-template-columns: 1fr; }
+      .spacer { height: 15vh; }
+    }
+
+  </style>
+</head>
+<body>
+  <div id="c-dot"></div>
+  <div id="c-ring-wrap"><div id="c-ring"><span class="c-label">View</span></div></div>
+
+  <nav>
+    <a href="index.html" class="logo">Mahe Roggero</a>
+    <div class="nav-links">
+      <a href="projects.html" class="active">Projects</a>
+      <a href="about.html">About</a>
+    </div>
+  </nav>
+
+  <div class="spacer"></div>
+
+  <div class="body-layout">
+
+    <div class="sidebar">
+      <span class="sidebar-label">All<br>Projects</span>
+    </div>
+
+    <div class="projects-grid">
+
+      <!-- Row A: landscape 4/3 -->
+      <a href="tokyo.html" class="project">
+        <div class="project-img">
+          <picture>
+            <source srcset="images/tokyo.webp" type="image/webp">
+            <img class="img-a" src="images/tokyo.png" alt="Tokyo" loading="lazy">
+          </picture>
+          <picture>
+            <source srcset="TokyoRender/Logo2.webp" type="image/webp">
+            <img class="img-b" src="TokyoRender/Logo2.png" alt="Tokyo alternate" loading="lazy" decoding="async">
+          </picture>
+        </div>
+        <div class="project-label">
+          <span class="project-name">Tokyo Night Drive</span>
+          <span class="project-type">Documentary</span>
+        </div>
+      </a>
+
+      <a href="prada.html" class="project">
+        <div class="project-img">
+          <picture>
+            <source srcset="images/prada.webp" type="image/webp">
+            <img class="img-a" src="images/prada.jpg" alt="Prada" loading="lazy">
+          </picture>
+          <picture>
+            <source srcset="prada/Mockup_city.webp" type="image/webp">
+            <img class="img-b" src="prada/Mockup_city.jpg" alt="Prada alternate" loading="lazy" decoding="async">
+          </picture>
+        </div>
+        <div class="project-label">
+          <span class="project-name">Prada</span>
+          <span class="project-type">Visual Identity</span>
+        </div>
+      </a>
+
+      <a href="nike.html" class="project">
+        <div class="project-img">
+          <picture>
+            <source srcset="images/nike.webp" type="image/webp">
+            <img class="img-a" src="images/nike.jpg" alt="Nike" loading="lazy">
+          </picture>
+          <picture>
+            <source srcset="NikeRender/billboard.webp" type="image/webp">
+            <img class="img-b" src="NikeRender/billboard.png" alt="Nike alternate" loading="lazy" decoding="async">
+          </picture>
+        </div>
+        <div class="project-label">
+          <span class="project-name">Nike — Turn On</span>
+          <span class="project-type">Campaign</span>
+        </div>
+      </a>
+
+      <!-- Row B: portrait 3/4 -->
+      <a href="oakley.html" class="project">
+        <div class="project-img">
+          <picture>
+            <source srcset="images/oakley.webp" type="image/webp">
+            <img class="img-a" src="images/oakley.png" alt="Oakley" loading="lazy">
+          </picture>
+          <picture>
+            <source srcset="Oakley/Frame.Still001.webp" type="image/webp">
+            <img class="img-b" src="Oakley/Frame.Still001.jpg" alt="Oakley alternate" loading="lazy" decoding="async">
+          </picture>
+        </div>
+        <div class="project-label">
+          <span class="project-name">Oakley</span>
+          <span class="project-type">Brand System</span>
+        </div>
+      </a>
+
+      <a href="morocco.html" class="project">
+        <div class="project-img">
+          <picture>
+            <source srcset="images/morocco.webp" type="image/webp">
+            <img class="img-a" src="images/morocco.jpg" alt="Morocco" loading="lazy">
+          </picture>
+          <picture>
+            <source srcset="03_RENDER/frame2Color.webp" type="image/webp">
+            <img class="img-b" src="03_RENDER/frame2Color.jpg" alt="Morocco alternate" loading="lazy" decoding="async">
+          </picture>
+        </div>
+        <div class="project-label">
+          <span class="project-name">Morocco</span>
+          <span class="project-type">Visual Study</span>
+        </div>
+      </a>
+
+      <a href="bold-agency.html" class="project">
+        <div class="project-img">
+          <picture>
+            <source srcset="images/bold-agency.webp" type="image/webp">
+            <img class="img-a" src="images/bold-agency.jpg" alt="Bold Agency" loading="lazy">
+          </picture>
+          <picture>
+            <source srcset="BoldRender/mockupsite.webp" type="image/webp">
+            <img class="img-b" src="BoldRender/mockupsite.jpg" alt="Bold Agency alternate" loading="lazy" decoding="async">
+          </picture>
+        </div>
+        <div class="project-label">
+          <span class="project-name">Bold Agency</span>
+          <span class="project-type">Digital</span>
+        </div>
+      </a>
+
+      <!-- Row C: landscape 4/3 -->
+      <a href="photography.html" class="project">
+        <div class="project-img">
+          <picture>
+            <source srcset="images/photography.webp" type="image/webp">
+            <img class="img-a" src="images/photography.jpg" alt="Series 01" loading="lazy">
+          </picture>
+          <img class="img-b" src="https://placehold.co/600x800/dedad4/9a9994?text=Series+01" alt="Series 01 alternate" loading="lazy">
+        </div>
+        <div class="project-label">
+          <span class="project-name">Series 01</span>
+          <span class="project-type">Photography</span>
+        </div>
+      </a>
+
+      <a href="vecchia.html" class="project">
+        <div class="project-img">
+          <picture>
+            <source srcset="images/vecchia.webp" type="image/webp">
+            <img class="img-a" src="images/vecchia.png" alt="Vecchia" loading="lazy">
+          </picture>
+          <picture>
+            <source srcset="restaurantRender/updated.webp" type="image/webp">
+            <img class="img-b" src="restaurantRender/updated.jpg" alt="Vecchia alternate" loading="lazy" decoding="async">
+          </picture>
+        </div>
+        <div class="project-label">
+          <span class="project-name">La Vecchia Signora</span>
+          <span class="project-type">Branding</span>
+        </div>
+      </a>
+
+      <a href="tam.html" class="project">
+        <div class="project-img">
+          <picture>
+            <source srcset="images/tam.webp" type="image/webp">
+            <img class="img-a" src="images/tam.jpg" alt="TAM" loading="lazy">
+          </picture>
+          <picture>
+            <source srcset="TamRender/Mockup1.webp" type="image/webp">
+            <img class="img-b" src="TamRender/Mockup1.png" alt="TAM alternate" loading="lazy" decoding="async">
+          </picture>
+        </div>
+        <div class="project-label">
+          <span class="project-name">TAM Gratuit Pour Tous</span>
+          <span class="project-type">Editorial</span>
+        </div>
+      </a>
+
+    </div>
+  </div>
+
+  <script>
+    /* ── CUSTOM CURSOR ───────────────────────────────── */
+    (function(){
+      var d = document.getElementById('c-dot');
+      var w = document.getElementById('c-ring-wrap');
+      var r = document.getElementById('c-ring');
+      if (!d || !w || window.matchMedia('(hover: none)').matches) return;
+
+      var mx = -100, my = -100, rx = -100, ry = -100;
+
+      document.addEventListener('mousemove', function(e){ mx = e.clientX; my = e.clientY; });
+      document.addEventListener('mouseleave', function(){ d.style.opacity='0'; w.style.opacity='0'; });
+      document.addEventListener('mouseenter', function(){ d.style.opacity='1'; w.style.opacity='1'; });
+
+      document.querySelectorAll('a, button').forEach(function(el){
+        el.addEventListener('mouseenter', function(){ r.classList.add('is-link'); d.style.opacity='0'; });
+        el.addEventListener('mouseleave', function(){ r.classList.remove('is-link'); d.style.opacity='1'; });
+      });
+
+      document.querySelectorAll('.project-img').forEach(function(el){
+        el.addEventListener('mouseenter', function(){ r.classList.add('is-view'); r.classList.remove('is-link'); d.style.opacity='0'; });
+        el.addEventListener('mouseleave', function(){ r.classList.remove('is-view'); d.style.opacity='1'; });
+      });
+
+      function tick(){
+        rx += (mx - rx) * 0.1;
+        ry += (my - ry) * 0.1;
+        d.style.transform = 'translate('+mx+'px,'+my+'px)';
+        w.style.transform = 'translate('+rx+'px,'+ry+'px)';
+        requestAnimationFrame(tick);
+      }
+      requestAnimationFrame(tick);
+    })();
+  </script>
+
+  <script>
+    const observer = new IntersectionObserver((entries) => {
+      const visible = entries.filter(e => e.isIntersecting);
+      visible.forEach((entry, i) => {
+        const el = entry.target;
+        el.style.animationDelay = (i * 0.06) + 's';
+        el.classList.add('visible');
+        observer.unobserve(el);
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.project, .sidebar-label').forEach(el => observer.observe(el));
+  </script>
+
+  <script>
+    // ── HOVER IMAGE PRELOAD ──────────────────────────────────
+    // Triggers eager loading of img-b (hover image) 600px before the card
+    // enters the viewport, so the image is ready before the user can hover.
+    (function () {
+      var preloader = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (!entry.isIntersecting) return;
+          var imgB = entry.target.querySelector('.img-b');
+          if (imgB && imgB.loading === 'lazy') {
+            imgB.loading = 'eager';
+          }
+          preloader.unobserve(entry.target);
+        });
+      }, { rootMargin: '0px 0px 600px 0px' });
+
+      document.querySelectorAll('.project').forEach(function (el) {
+        preloader.observe(el);
+      });
+    })();
+  </script>
+
+  <script>
+    // ── PAGE TRANSITION — PROJECTS ──────────────────────────
+    (function() {
+      var nav    = document.querySelector('nav');
+      var spacer = document.querySelector('.spacer');
+      var layout = document.querySelector('.body-layout');
+
+      function fadeContent(opacity, duration, delay) {
+        [spacer, layout].filter(Boolean).forEach(function(el) {
+          el.style.transition = 'opacity ' + duration + 's ease ' + (delay || 0) + 's';
+          el.style.opacity    = opacity;
+        });
+      }
+
+      var from = sessionStorage.getItem('vt-from');
+
+      if (from === 'home') {
+        // ENTRANCE depuis home
+        sessionStorage.removeItem('vt-from');
+        var savedTop = parseFloat(sessionStorage.getItem('vt-header-top') || '0');
+        sessionStorage.removeItem('vt-header-top');
+        var navAnimated = sessionStorage.getItem('vt-nav-animated');
+        sessionStorage.removeItem('vt-nav-animated');
+        if (savedTop > 0) sessionStorage.setItem('vt-home-header-top', savedTop);
+        if (navAnimated) {
+          // Nav déjà animé côté home : juste fade in contenu
+          fadeContent('0', '0', 0);
+          requestAnimationFrame(function() { requestAnimationFrame(function() {
+            fadeContent('1', '0.7', 0);
+          }); });
+        } else {
+          // Fallback : animation originale ralentie
+          nav.style.transition = 'none';
+          nav.style.transform  = 'translateY(' + savedTop + 'px)';
+          fadeContent('0', '0', 0);
+          requestAnimationFrame(function() { requestAnimationFrame(function() {
+            nav.style.transition = 'transform 0.65s cubic-bezier(0.25, 0, 0.1, 1)';
+            nav.style.transform  = 'translateY(0)';
+            fadeContent('1', '0.7', 0.2);
+          }); });
+        }
+
+      } else if (from === 'about-projects') {
+        // ENTRANCE depuis about : juste content fade in
+        sessionStorage.removeItem('vt-from');
+        fadeContent('0', '0', 0);
+        requestAnimationFrame(function() { requestAnimationFrame(function() {
+          fadeContent('1', '0.55', 0);
+        }); });
+      }
+
+      // EXIT : vers home
+      var logoLink = document.querySelector('a.logo[href="index.html"]');
+      if (logoLink) logoLink.addEventListener('click', function(e) {
+        e.preventDefault();
+        sessionStorage.setItem('vt-from', 'projects');
+        var homeTop = parseFloat(sessionStorage.getItem('vt-home-header-top') || '0');
+        if (homeTop > 0) {
+          nav.style.transition = 'transform 0.7s cubic-bezier(0.25, 0, 0.1, 1)';
+          nav.style.transform  = 'translateY(' + homeTop + 'px)';
+          sessionStorage.setItem('vt-nav-animated-return', '1');
+        }
+        fadeContent('0', '0.7', 0);
+        setTimeout(function() { window.location.href = 'index.html'; }, 720);
+      });
+
+      // EXIT : vers about
+      var aboutLink = document.querySelector('a[href="about.html"]');
+      if (aboutLink) aboutLink.addEventListener('click', function(e) {
+        e.preventDefault();
+        sessionStorage.setItem('vt-from', 'projects-about');
+        fadeContent('0', '0.35', 0);
+        setTimeout(function() { window.location.href = 'about.html'; }, 360);
+      });
+    })();
+  </script>
+
+</body>
+</html>

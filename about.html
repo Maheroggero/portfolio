@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="format-detection" content="telephone=no,address=no,email=no">
+  <title>Mahe Roggero — About</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:      #FFFFFF;
+      --ink:     #141412;
+      --gray:    #8A8A87;
+      --border:  #E2E1DC;
+      --f:       'DM Sans', system-ui, sans-serif;
+      --pad:     20px;
+      --label-w: 240px;
+    }
+
+    html { background: var(--bg); scrollbar-gutter: stable; }
+
+    body {
+      background: var(--bg);
+      color: var(--ink);
+      font-family: var(--f);
+      font-size: 14px;
+      font-weight: 400;
+      line-height: 1.65;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    body.modal-open { overflow: hidden; }
+
+    a { text-decoration: none; color: inherit !important; }
+    a:hover { color: var(--gray) !important; }
+    a:visited { color: inherit !important; }
+
+    /* ── NAV ─────────────────────── */
+    nav {
+      display: grid;
+      grid-template-columns: clamp(180px, 29vw, 420px) 1fr;
+      align-items: center;
+      padding: 18px clamp(24px, 4vw, 56px);
+      position: sticky;
+      top: 0;
+      background: transparent;
+      z-index: 10;
+      will-change: transform;
+    }
+
+    .logo {
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 0.01em;
+      transition: opacity 0.2s;
+    }
+    .logo:hover { opacity: 0.4; }
+
+    /* ── CUSTOM CURSOR ────────────────────────────── */
+    @media (hover: hover) {
+      *, a, button { cursor: none !important; }
+
+      #c-dot {
+        position: fixed; top: 0; left: 0;
+        width: 5px; height: 5px; margin: -2.5px 0 0 -2.5px;
+        background: var(--ink);
+        border-radius: 50%;
+        pointer-events: none; z-index: 9999;
+        will-change: transform;
+        transition: opacity 0.2s;
+      }
+
+      #c-ring-wrap {
+        position: fixed; top: 0; left: 0;
+        pointer-events: none; z-index: 9998;
+        will-change: transform;
+      }
+
+      #c-ring {
+        width: 32px; height: 32px; margin: -16px 0 0 -16px;
+        border: 1px solid rgba(20,20,18,0.55);
+        border-radius: 50%;
+        display: flex; align-items: center; justify-content: center;
+        transition: width 0.38s cubic-bezier(0.25,0,0.1,1),
+                    height 0.38s cubic-bezier(0.25,0,0.1,1),
+                    margin 0.38s cubic-bezier(0.25,0,0.1,1),
+                    background 0.38s,
+                    border-color 0.38s,
+                    opacity 0.2s;
+      }
+
+      #c-ring.is-link {
+        width: 16px; height: 16px; margin: -8px 0 0 -8px;
+        background: var(--ink); border-color: var(--ink);
+      }
+
+      #c-ring .c-label {
+        font-family: 'DM Sans', sans-serif;
+        font-size: 9px; font-weight: 400; letter-spacing: 0.12em;
+        text-transform: uppercase; color: #FFFFFF;
+        opacity: 0; transition: opacity 0.28s;
+        user-select: none; pointer-events: none;
+      }
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 28px;
+      justify-self: start;
+    }
+
+    .nav-links a {
+      font-size: 13px;
+      font-weight: 400;
+      color: var(--gray);
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover,
+    .nav-links a.active { color: var(--ink); }
+
+    /* ── SPACER ──────────────────── */
+    .spacer { height: 30vh; }
+
+    /* ── BODY LAYOUT ─────────────── */
+    .body-layout {
+      display: grid;
+      grid-template-columns: clamp(180px, 29vw, 420px) 1fr;
+      padding: 0 32px clamp(80px, 12vw, 140px) clamp(24px, 4vw, 56px);
+    }
+
+    .sidebar {
+      position: sticky;
+      top: calc(18px + 13px + 18px + 30vh);
+      align-self: start;
+    }
+
+    .sidebar-label {
+      font-size: 13px;
+      color: var(--gray);
+      letter-spacing: 0.02em;
+      line-height: 1.4;
+    }
+
+    /* ── FADE ANIMATION ──────────── */
+    @keyframes fadeUp {
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .fade-in {
+      opacity: 0;
+      transform: translateY(14px);
+      animation: fadeUp 0.65s cubic-bezier(0.25, 0, 0.1, 1) forwards;
+    }
+
+    /* ── CONTENT ─────────────────── */
+    .content {
+      padding: 0;
+    }
+
+    /* ── SECTION ROW ─────────────── */
+    .section {
+      display: flex;
+      gap: 40px;
+      padding: 40px 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .section:first-child { padding-top: 0; }
+    .section:last-child { border-bottom: none; }
+
+    .section-label {
+      flex: 0 0 var(--label-w);
+      font-size: 13px;
+      color: var(--gray);
+      position: sticky;
+      top: calc(18px + 13px + 18px);
+      align-self: flex-start;
+      padding-top: 2px;
+    }
+
+    .section-body {
+      flex: 1;
+      min-width: 0;
+    }
+
+    /* ── ABOUT SECTION ───────────── */
+    .bio-text {
+      font-size: 15px;
+      line-height: 1.7;
+      color: var(--ink);
+      max-width: 640px;
+    }
+
+    .bio-text p + p { margin-top: 1.2em; }
+
+    /* ── EXPERTISE SECTION ───────── */
+    .expertise-list {
+      list-style: none;
+      columns: 2;
+      column-gap: 40px;
+    }
+
+    .expertise-list li {
+      font-size: 14px;
+      color: var(--ink);
+      padding: 3px 0;
+      break-inside: avoid;
+    }
+
+    /* ── CONTACT SECTION ─────────── */
+    .contact-items {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      margin-bottom: 24px;
+    }
+
+    .contact-items li {
+      font-size: 14px;
+      color: var(--ink);
+    }
+
+    .contact-items a { transition: color 0.2s; }
+    .contact-items a:hover { color: var(--gray) !important; }
+
+    .cta-btn {
+      display: inline-block;
+      font-size: 13px;
+      font-family: var(--f);
+      font-weight: 400;
+      color: var(--ink);
+      background: none;
+      border: none;
+      border-bottom: 1px solid var(--ink);
+      padding: 0 0 2px 0;
+      cursor: pointer;
+      transition: opacity 0.2s;
+      letter-spacing: 0.01em;
+    }
+
+    .cta-btn:hover { opacity: 0.4; }
+
+    /* ── MODAL OVERLAY ───────────── */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(20, 20, 18, 0.35);
+      backdrop-filter: blur(3px);
+      -webkit-backdrop-filter: blur(3px);
+      z-index: 100;
+      display: flex;
+      align-items: flex-end;
+      justify-content: stretch;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.35s ease;
+    }
+
+    .modal-overlay.open {
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    /* cursor: default inside modal */
+    .modal-overlay.open,
+    .modal-overlay.open * {
+      cursor: auto !important;
+    }
+
+    /* hide custom cursor elements when modal is open */
+    body.modal-open #c-dot,
+    body.modal-open #c-ring-wrap {
+      opacity: 0 !important;
+    }
+
+    /* ── MODAL PANEL ─────────────── */
+    .modal-panel {
+      background: var(--bg);
+      border-top: 1px solid var(--border);
+      border-left: none;
+      border-right: none;
+      border-bottom: none;
+      border-radius: 0;
+      padding: 40px clamp(24px, 6vw, 80px) 52px;
+      width: 100%;
+      position: relative;
+      transform: translate3d(0, 100%, 0);
+      will-change: transform;
+      transition: transform 0.42s cubic-bezier(0.25, 0, 0.1, 1);
+    }
+
+    .modal-overlay.open .modal-panel {
+      transform: translate3d(0, 0, 0);
+    }
+
+    .modal-inner {
+      max-width: 560px;
+      margin: 0 auto;
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 20px;
+      right: clamp(24px, 6vw, 80px);
+      font-size: 16px;
+      font-weight: 300;
+      color: var(--gray);
+      background: none;
+      border: none;
+      line-height: 1;
+      transition: color 0.2s;
+      font-family: var(--f);
+      padding: 4px;
+    }
+
+    .modal-close:hover { color: var(--ink); }
+
+    .modal-title {
+      font-size: 13px;
+      font-weight: 400;
+      letter-spacing: 0.02em;
+      color: var(--gray);
+      margin-bottom: 32px;
+    }
+
+    /* ── FORM ────────────────────── */
+    .form-fields {
+      display: flex;
+      flex-direction: column;
+      gap: 28px;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 28px;
+    }
+
+    .form-field {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .form-field label {
+      font-size: 11px;
+      color: var(--gray);
+      letter-spacing: 0.02em;
+      margin-bottom: 4px;
+      text-transform: uppercase;
+    }
+
+    .form-field input,
+    .form-field textarea {
+      font-family: var(--f);
+      font-size: 14px;
+      font-weight: 400;
+      color: var(--ink);
+      background: transparent;
+      border: none;
+      border-bottom: 1px solid var(--border);
+      padding: 10px 0;
+      outline: none;
+      width: 100%;
+      transition: border-color 0.2s;
+      resize: none;
+      line-height: 1.65;
+    }
+
+    .form-field textarea { resize: vertical; min-height: 100px; }
+
+    .form-field input:focus,
+    .form-field textarea:focus {
+      border-color: var(--ink);
+    }
+
+    .form-field input::placeholder,
+    .form-field textarea::placeholder {
+      color: var(--border);
+    }
+
+    .form-actions {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 16px;
+      margin-top: 36px;
+    }
+
+    .form-submit {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      font-family: var(--f);
+      font-weight: 400;
+      color: var(--bg);
+      background: var(--ink);
+      border: 1px solid var(--ink);
+      padding: 11px 24px;
+      cursor: pointer;
+      letter-spacing: 0.04em;
+      transition: background 0.2s, color 0.2s;
+    }
+
+    .form-submit:hover {
+      background: transparent;
+      color: var(--ink);
+    }
+
+    .form-confirm {
+      font-size: 13px;
+      color: var(--gray);
+      display: none;
+    }
+
+    .form-confirm.visible { display: block; }
+
+    /* ── RESPONSIVE ──────────────── */
+    @media (max-width: 900px) {
+      .body-layout { grid-template-columns: 1fr; padding-left: clamp(24px, 4vw, 56px); }
+      .sidebar { position: static; padding-bottom: 16px; }
+      nav { grid-template-columns: 1fr auto; }
+    }
+
+    @media (max-width: 700px) {
+      .section { flex-direction: column; gap: 16px; }
+      .section-label { position: static; flex: none; }
+      .expertise-list { columns: 1; }
+      .modal-panel { padding: 32px 24px 44px; }
+      .form-row { grid-template-columns: 1fr; }
+      .spacer { height: 15vh; }
+    }
+
+    @media (max-width: 480px) {
+      .spacer { height: 10vh; }
+      .section { padding: 24px 0; }
+    }
+  </style>
+</head>
+<body>
+  <div id="c-dot"></div>
+  <div id="c-ring-wrap"><div id="c-ring"><span class="c-label"></span></div></div>
+
+  <nav>
+    <a href="index.html" class="logo">Mahe Roggero</a>
+    <div class="nav-links">
+      <a href="projects.html">Projects</a>
+      <a href="about.html" class="active">About</a>
+    </div>
+  </nav>
+
+  <div class="spacer"></div>
+
+  <div class="body-layout">
+    <div class="sidebar">
+      <span class="sidebar-label">Creative<br>Director</span>
+    </div>
+  <div class="content">
+
+    <!-- About -->
+    <div class="section fade-in" style="animation-delay: 0.12s">
+      <div class="section-label">About</div>
+      <div class="section-body">
+        <div class="bio-text">
+          <p>
+            I'm Mahe Roggero, a Creative Director working across visual identity, art direction, and digital experiences. My work sits at the intersection of strategy and craft — building brands that are both meaningful and unmistakably distinctive.
+          </p>
+          <p>
+            Growing up between France, the UK, and years spent across Europe and the Americas has shaped the way I think about communication — I move fluently between cultures, languages, and audiences, which gives my work a perspective that's both grounded and adaptable.
+          </p>
+          <p>
+            Over the years I've worked across fashion, culture, sport, and hospitality — collaborating with brands that demand rigour and a genuine point of view. I care about the full arc of a project, from the first concept to the final pixel.
+          </p>
+          <p>
+            I'm currently open to new opportunities worldwide — whether that's an in-house role, agency collaboration, or freelance project. If you're looking for a creative director who brings both strategic thinking and hands-on craft, let's talk.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Expertise -->
+    <div class="section fade-in" style="animation-delay: 0.18s">
+      <div class="section-label">Expertise</div>
+      <div class="section-body">
+        <ul class="expertise-list">
+          <li>Brand Identity</li>
+          <li>Art Direction</li>
+          <li>Editorial Design</li>
+          <li>Digital Experience</li>
+          <li>Visual Strategy</li>
+          <li>Photography</li>
+          <li>Motion &amp; Film</li>
+          <li>Packaging</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Contact -->
+    <div class="section fade-in" style="animation-delay: 0.24s">
+      <div class="section-label">Contact</div>
+      <div class="section-body">
+        <ul class="contact-items">
+          <li><a href="mailto:mahe0roggero@gmail.com">mahe0roggero@gmail.com</a></li>
+          <li><a href="tel:+33630162628">+33 6 30 16 26 28</a></li>
+        </ul>
+        <button class="cta-btn" id="openModal">Send a message →</button>
+      </div>
+    </div>
+
+  </div>
+  </div>
+
+  <!-- Modal -->
+  <div class="modal-overlay" id="modalOverlay" role="dialog" aria-modal="true" aria-label="Send a message">
+    <div class="modal-panel" id="modalPanel">
+      <button class="modal-close" id="closeModal" aria-label="Close">×</button>
+      <div class="modal-inner">
+        <p class="modal-title">Send a message</p>
+
+        <form id="contactForm" novalidate>
+          <div class="form-fields">
+            <div class="form-row">
+              <div class="form-field">
+                <label for="fieldName">Name</label>
+                <input type="text" id="fieldName" name="name" placeholder="Your name" autocomplete="name">
+              </div>
+              <div class="form-field">
+                <label for="fieldEmail">Email</label>
+                <input type="email" id="fieldEmail" name="email" placeholder="your@email.com" autocomplete="email">
+              </div>
+            </div>
+            <div class="form-field">
+              <label for="fieldMessage">Message</label>
+              <textarea id="fieldMessage" name="message" rows="4" placeholder="Tell me about your project…"></textarea>
+            </div>
+          </div>
+
+          <div class="form-actions">
+            <button type="submit" class="form-submit">Send →</button>
+            <span class="form-confirm" id="formConfirm">Message sent — thank you.</span>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    /* ── Modal open/close ─── */
+    const overlay   = document.getElementById('modalOverlay');
+    const openBtn   = document.getElementById('openModal');
+    const closeBtn  = document.getElementById('closeModal');
+    const form      = document.getElementById('contactForm');
+    const confirm   = document.getElementById('formConfirm');
+
+    function openModal() {
+      overlay.classList.add('open');
+      document.body.classList.add('modal-open');
+      setTimeout(() => document.getElementById('fieldName').focus(), 50);
+    }
+
+    function closeModal() {
+      overlay.classList.remove('open');
+      document.body.classList.remove('modal-open');
+    }
+
+    openBtn.addEventListener('click', openModal);
+    closeBtn.addEventListener('click', closeModal);
+
+    overlay.addEventListener('click', (e) => {
+      if (e.target === overlay) closeModal();
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && overlay.classList.contains('open')) closeModal();
+    });
+
+    /* ── Form submit ─── */
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+
+      const name    = document.getElementById('fieldName').value.trim();
+      const email   = document.getElementById('fieldEmail').value.trim();
+      const message = document.getElementById('fieldMessage').value.trim();
+
+      if (!name || !email || !message) return;
+
+      // Mailto fallback
+      const subject = encodeURIComponent('Message from ' + name);
+      const body    = encodeURIComponent(message + '\n\n— ' + name + '\n' + email);
+      window.location.href = `mailto:mahe0roggero@gmail.com?subject=${subject}&body=${body}`;
+
+      confirm.classList.add('visible');
+      form.querySelector('.form-submit').style.display = 'none';
+    });
+  </script>
+
+  <script>
+    // ── PAGE TRANSITION — ABOUT ──────────────────────────────
+    (function() {
+      var nav     = document.querySelector('nav');
+      var content = document.querySelector('.content');
+      var sidebar = document.querySelector('.sidebar');
+
+      function setContent(opacity, dur, delay) {
+        var t = 'opacity ' + dur + 's ease ' + (delay || 0) + 's';
+        content.style.transition = t;
+        content.style.opacity    = opacity;
+        if (sidebar) {
+          sidebar.style.transition = t;
+          sidebar.style.opacity    = opacity;
+        }
+      }
+
+      var from = sessionStorage.getItem('vt-from');
+
+      if (from === 'home') {
+        // ENTRANCE depuis home
+        sessionStorage.removeItem('vt-from');
+        var top = parseFloat(sessionStorage.getItem('vt-header-top') || '0');
+        sessionStorage.removeItem('vt-header-top');
+        var navAnimated = sessionStorage.getItem('vt-nav-animated');
+        sessionStorage.removeItem('vt-nav-animated');
+        if (top > 0) sessionStorage.setItem('vt-home-header-top', top);
+        nav.style.transition = 'none';
+        nav.style.transform  = navAnimated ? 'translateY(0)' : 'translateY(' + top + 'px)';
+        setContent('0', '0', 0);
+        requestAnimationFrame(function() { requestAnimationFrame(function() {
+          if (!navAnimated) {
+            nav.style.transition = 'transform 0.65s cubic-bezier(0.25, 0, 0.1, 1)';
+            nav.style.transform  = 'translateY(0)';
+          }
+          setContent('1', '0.7', navAnimated ? 0 : 0.2);
+        }); });
+
+      } else if (from === 'projects-about') {
+        // ENTRANCE depuis projects : juste content fade in
+        sessionStorage.removeItem('vt-from');
+        setContent('0', '0', 0);
+        requestAnimationFrame(function() { requestAnimationFrame(function() {
+          setContent('1', '0.55', 0);
+        }); });
+      }
+
+      // EXIT : vers home
+      var logoLink = document.querySelector('a.logo[href="index.html"]');
+      if (logoLink) logoLink.addEventListener('click', function(e) {
+        e.preventDefault();
+        sessionStorage.setItem('vt-from', 'about');
+        var homeTop = parseFloat(sessionStorage.getItem('vt-home-header-top') || '0');
+        if (homeTop > 0) {
+          nav.style.transition = 'transform 0.7s cubic-bezier(0.25, 0, 0.1, 1)';
+          nav.style.transform  = 'translateY(' + homeTop + 'px)';
+          sessionStorage.setItem('vt-nav-animated-return', '1');
+        }
+        setContent('0', '0.7', 0);
+        setTimeout(function() { window.location.href = 'index.html'; }, 720);
+      });
+
+      // EXIT : vers projects
+      var projLink = document.querySelector('a[href="projects.html"]');
+      if (projLink) projLink.addEventListener('click', function(e) {
+        e.preventDefault();
+        sessionStorage.setItem('vt-from', 'about-projects');
+        setContent('0', '0.35', 0);
+        setTimeout(function() { window.location.href = 'projects.html'; }, 360);
+      });
+    })();
+  </script>
+
+  <script>
+    /* ── CUSTOM CURSOR ───────────────────────────────── */
+    (function(){
+      var d = document.getElementById('c-dot');
+      var w = document.getElementById('c-ring-wrap');
+      var r = document.getElementById('c-ring');
+      if (!d || !w || window.matchMedia('(hover: none)').matches) return;
+
+      var mx = -100, my = -100, rx = -100, ry = -100;
+
+      document.addEventListener('mousemove', function(e){ mx = e.clientX; my = e.clientY; });
+      document.addEventListener('mouseleave', function(){ d.style.opacity='0'; w.style.opacity='0'; });
+      document.addEventListener('mouseenter', function(){ d.style.opacity='1'; w.style.opacity='1'; });
+
+      document.querySelectorAll('a, button').forEach(function(el){
+        el.addEventListener('mouseenter', function(){ r.classList.add('is-link'); d.style.opacity='0'; });
+        el.addEventListener('mouseleave', function(){ r.classList.remove('is-link'); d.style.opacity='1'; });
+      });
+
+      function tick(){
+        rx += (mx - rx) * 0.1;
+        ry += (my - ry) * 0.1;
+        d.style.transform = 'translate('+mx+'px,'+my+'px)';
+        w.style.transform = 'translate('+rx+'px,'+ry+'px)';
+        requestAnimationFrame(tick);
+      }
+      requestAnimationFrame(tick);
+    })();
+  </script>
+
+</body>
+</html>

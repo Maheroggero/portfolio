@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TAM Gratuit Pour Tous — Mahe Roggero</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:     #FFFFFF;
+      --ink:    #141412;
+      --gray:   #8A8A87;
+      --border: #E2E1DC;
+      --f:      'DM Sans', system-ui, sans-serif;
+      --top-gap: clamp(130px, 22vh, 180px);
+    }
+
+    html, body {
+      background: var(--bg);
+      color: var(--ink);
+      font-family: var(--f);
+      font-size: 13px;
+      font-weight: 400;
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a { text-decoration: none; color: inherit; }
+
+    nav {
+      display: grid;
+      grid-template-columns: clamp(180px, 29vw, 420px) 1fr;
+      align-items: center;
+      padding: 18px clamp(24px, 4vw, 56px);
+      position: sticky;
+      top: 0;
+      background: transparent;
+      z-index: 10;
+    }
+
+    .logo { font-size: 13px; font-weight: 500; letter-spacing: 0.01em; transition: opacity 0.2s; }
+    .logo:hover { opacity: 0.4; }
+
+    .nav-links { display: flex; gap: 28px; justify-self: start; }
+    .nav-links a { font-size: 13px; font-weight: 400; color: var(--gray); transition: color 0.2s; }
+    .nav-links a:hover { color: var(--ink); }
+
+    .spacer { height: var(--top-gap); }
+
+    .body-layout {
+      display: grid;
+      grid-template-columns: clamp(180px, 29vw, 420px) 1fr;
+      padding: 0 32px clamp(80px, 12vw, 140px) clamp(24px, 4vw, 56px);
+      gap: 0;
+      align-items: start;
+    }
+
+    .sidebar {
+      position: fixed;
+      top: calc(var(--top-gap) + 18px + 13px + 18px);
+      left: clamp(24px, 4vw, 56px);
+      width: calc(clamp(180px, 29vw, 420px) - clamp(24px, 4vw, 56px) - 20px);
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .project-title { font-size: 13px; font-weight: 500; color: var(--ink); letter-spacing: 0.01em; }
+    .project-year { font-size: 12px; font-weight: 300; color: var(--gray); letter-spacing: 0.01em; margin-top: -12px; }
+
+    .meta-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+
+    .tag {
+      display: inline-block;
+      padding: 4px 10px;
+      border: none;
+      border-radius: 4px;
+      font-size: 11px;
+      color: var(--ink);
+      background-color: #EDECE8;
+      font-weight: 400;
+      letter-spacing: 0.01em;
+      line-height: 1.5;
+    }
+
+    .project-desc { font-size: 12px; color: var(--gray); font-weight: 300; line-height: 1.7; margin-top: 4px; }
+
+    .back { font-size: 12px; color: var(--gray); transition: color 0.2s; letter-spacing: 0.02em; }
+    .back:hover { color: var(--ink); }
+
+    .project-images { grid-column: 2; display: flex; flex-direction: column; gap: clamp(8px, 1vw, 14px); }
+
+    .img-row { display: flex; gap: clamp(8px, 1vw, 14px); }
+
+    .img-wrap { overflow: hidden; background: var(--border); flex: 1; }
+    .img-wrap img { width: 100%; height: auto; display: block; }
+    .img-wrap picture { display: contents; }
+    .img-wrap video { width: 100%; height: auto; display: block; }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(14px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .sidebar, .img-row { opacity: 0; }
+    .sidebar.visible { animation: fadeUp 0.65s cubic-bezier(0.25, 0, 0.1, 1) both; }
+    .img-row.visible  { animation: fadeUp 0.65s cubic-bezier(0.25, 0, 0.1, 1) both; }
+
+    @media (max-width: 900px) {
+      nav { grid-template-columns: 1fr auto; }
+      .body-layout { grid-template-columns: 1fr; }
+      .sidebar { position: static; width: auto; padding-bottom: 28px; }
+      .project-images { grid-column: 1; }
+    }
+    @media (max-width: 640px) {
+      .img-row.two-col { flex-direction: column; }
+      .spacer { height: 10vh; }
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <a href="index.html" class="logo">Mahe Roggero</a>
+    <div class="nav-links">
+      <a href="projects.html">Projects</a>
+      <a href="about.html">About</a>
+    </div>
+  </nav>
+
+  <div class="spacer"></div>
+
+  <div class="body-layout">
+
+    <aside class="sidebar">
+      <a href="projects.html" class="back">← All Projects</a>
+      <span class="project-title">TAM</span>
+      <span class="project-year">2022</span>
+      <div class="meta-tags">
+        <span class="tag">Brand Campaign</span>
+        <span class="tag">AI</span>
+      </div>
+      <p class="project-desc">TAM Gratuit pour tous is a creative campaign powered by generative AI, designed to illustrate how free public transport appeals to everyone. In this concept, "everyone" is reimagined through animals rarely seen in urban transit, leaning into a vibrant cartoon style to emphasize the surreal, whimsical nature of the project.</p>
+    </aside>
+
+    <div class="project-images">
+      <div class="img-row hero">
+        <div class="img-wrap"><picture>
+  <source srcset="images/tam.webp" type="image/webp">
+  <img src="images/tam.jpg" alt="TAM">
+</picture></div>
+      </div>
+      <div class="img-row two-col">
+        <div class="img-wrap"><picture>
+  <source srcset="TamRender/afficheV2-1.webp" type="image/webp">
+  <img src="TamRender/afficheV2-1.jpg" alt="" loading="lazy">
+</picture></div>
+        <div class="img-wrap"><picture>
+  <source srcset="TamRender/afficheV2-2.webp" type="image/webp">
+  <img src="TamRender/afficheV2-2.jpg" alt="" loading="lazy">
+</picture></div>
+      </div>
+      <div class="img-row two-col">
+        <div class="img-wrap"><picture>
+  <source srcset="TamRender/afficheV2-3.webp" type="image/webp">
+  <img src="TamRender/afficheV2-3.jpg" alt="" loading="lazy">
+</picture></div>
+        <div class="img-wrap"><picture>
+  <source srcset="TamRender/afficheV2-4.webp" type="image/webp">
+  <img src="TamRender/afficheV2-4.jpg" alt="" loading="lazy">
+</picture></div>
+      </div>
+      <div class="img-row">
+        <div class="img-wrap"><picture>
+  <source srcset="TamRender/InstaFeed.webp" type="image/webp">
+  <img src="TamRender/InstaFeed.png" alt="" loading="lazy">
+</picture></div>
+      </div>
+      <div class="img-row">
+        <div class="img-wrap"><picture>
+  <source srcset="TamRender/Mockup1-full.webp" type="image/webp">
+  <img src="TamRender/Mockup1.png" alt="" loading="lazy">
+</picture></div>
+      </div>
+      <div class="img-row two-col">
+        <div class="img-wrap" style="background:#EDECE8;"><picture>
+  <source srcset="TamRender/phoque officiel.webp" type="image/webp">
+  <img src="TamRender/phoque officiel.png" alt="" loading="lazy">
+</picture></div>
+        <div class="img-wrap" style="background:#EDECE8;"><picture>
+  <source srcset="TamRender/toucan officiel.webp" type="image/webp">
+  <img src="TamRender/toucan officiel.png" alt="" loading="lazy">
+</picture></div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const observer = new IntersectionObserver((entries) => {
+      const visible = entries.filter(e => e.isIntersecting);
+      visible.forEach((entry, i) => {
+        const el = entry.target;
+        el.style.animationDelay = (i * 0.06) + 's';
+        el.classList.add('visible');
+        observer.unobserve(el);
+      });
+    }, { threshold: 0.05, rootMargin: '0px 0px 200px 0px' });
+    document.querySelectorAll('.sidebar, .img-row').forEach(el => observer.observe(el));
+  </script>
+
+</body>
+</html>
