@@ -192,7 +192,7 @@
 
     <div class="project-images">
       <div class="img-row">
-        <div class="img-wrap"><video src="Oakley/Oakley_adV1.mp4" autoplay loop controls playsinline></video></div>
+        <div class="img-wrap"><video data-src="https://res.cloudinary.com/dfgqyhbgq/video/upload/q_auto,f_auto/portfolio/oakley.mp4" poster="images/oakley_poster.jpg" preload="none" loop controls playsinline class="lazy-video"></video></div>
       </div>
       <div class="img-row two-col">
         <div class="img-wrap"><picture>
@@ -216,7 +216,10 @@
                   <source srcset="images/prada.webp" type="image/webp">
                   <img class="img-a" src="images/prada.jpg" alt="Prada" loading="lazy">
                 </picture>
-                <img class="img-b" src="prada/Mockup_city.jpg" alt="Prada alternate" loading="lazy">
+                <picture>
+                  <source srcset="prada/Mockup_city.webp" type="image/webp">
+                  <img class="img-b" src="prada/Mockup_city.jpg" alt="Prada alternate" loading="lazy" decoding="async">
+                </picture>
               </div>
               <div class="project-label">
                 <span class="project-name">Prada</span>
@@ -232,7 +235,10 @@
                   <source srcset="images/morocco.webp" type="image/webp">
                   <img class="img-a" src="images/morocco.jpg" alt="Morocco" loading="lazy">
                 </picture>
-                <img class="img-b" src="03_RENDER/frame2Color.jpg" alt="Morocco alternate" loading="lazy">
+                <picture>
+                  <source srcset="03_RENDER/frame2Color.webp" type="image/webp">
+                  <img class="img-b" src="03_RENDER/frame2Color.jpg" alt="Morocco alternate" loading="lazy" decoding="async">
+                </picture>
               </div>
               <div class="project-label">
                 <span class="project-name">Morocco</span>
@@ -300,5 +306,25 @@
       <a href="projects.html">Projects</a>
     </div>
   </footer>
+  <script>
+    // ── HOVER IMAGE PRELOAD ──────────────────────────────────
+    (function () {
+      var preloader = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (!entry.isIntersecting) return;
+          var imgB = entry.target.querySelector('.img-b');
+          if (imgB && imgB.loading === 'lazy') {
+            imgB.loading = 'eager';
+          }
+          preloader.unobserve(entry.target);
+        });
+      }, { rootMargin: '0px 0px 600px 0px' });
+
+      document.querySelectorAll('.project').forEach(function (el) {
+        preloader.observe(el);
+      });
+    })();
+  </script>
+  <script src="scripts.js"></script>
 </body>
 </html>

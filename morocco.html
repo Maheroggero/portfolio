@@ -191,7 +191,7 @@
 
     <div class="project-images">
       <div class="img-row">
-        <div class="img-wrap"><video src="03_RENDER/morocco_1m30.mp4" autoplay loop controls playsinline></video></div>
+        <div class="img-wrap"><video data-src="https://res.cloudinary.com/dfgqyhbgq/video/upload/q_auto,f_auto/portfolio/morocco.mp4" poster="images/morocco_poster.jpg" preload="none" loop controls playsinline class="lazy-video"></video></div>
       </div>
       <div class="img-row two-col">
         <div class="img-wrap"><picture>
@@ -231,7 +231,7 @@
                   <source srcset="images/photography.webp" type="image/webp">
                   <img class="img-a" src="images/photography.jpg" alt="Series 01" loading="lazy">
                 </picture>
-                <img class="img-b" src="https://placehold.co/600x800/dedad4/9a9994" alt="Series 01 alternate" loading="lazy">
+                <img class="img-b" src="https://placehold.co/600x800/dedad4/9a9994" alt="Series 01 alternate" loading="lazy" decoding="async">
               </div>
               <div class="project-label">
                 <span class="project-name">Series 01</span>
@@ -247,7 +247,10 @@
                   <source srcset="images/bold-agency.webp" type="image/webp">
                   <img class="img-a" src="images/bold-agency.jpg" alt="Bold Agency" loading="lazy">
                 </picture>
-                <img class="img-b" src="BoldRender/mockupsite.jpg" alt="Bold Agency alternate" loading="lazy">
+                <picture>
+                  <source srcset="BoldRender/mockupsite.webp" type="image/webp">
+                  <img class="img-b" src="BoldRender/mockupsite.jpg" alt="Bold Agency alternate" loading="lazy" decoding="async">
+                </picture>
               </div>
               <div class="project-label">
                 <span class="project-name">Bold Agency</span>
@@ -315,5 +318,25 @@
       <a href="projects.html">Projects</a>
     </div>
   </footer>
+  <script>
+    // ── HOVER IMAGE PRELOAD ──────────────────────────────────
+    (function () {
+      var preloader = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (!entry.isIntersecting) return;
+          var imgB = entry.target.querySelector('.img-b');
+          if (imgB && imgB.loading === 'lazy') {
+            imgB.loading = 'eager';
+          }
+          preloader.unobserve(entry.target);
+        });
+      }, { rootMargin: '0px 0px 600px 0px' });
+
+      document.querySelectorAll('.project').forEach(function (el) {
+        preloader.observe(el);
+      });
+    })();
+  </script>
+  <script src="scripts.js"></script>
 </body>
 </html>

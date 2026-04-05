@@ -1,18 +1,12 @@
 temporary screenshots/
 __pycache__/
+*.py
 *.pyc
 .DS_Store
 Thumbs.db
 
 # Vidéo trop lourde pour GitHub (209 MB > 100 MB limite)
 03_RENDER/morocco_1m30.mp4
-
-# Scripts de dev Claude Code (pas des assets du site)
-screenshot.py
-generate-full.py
-optimize-images.py
-reoptimize-imgb.py
-update-html.py
 
 # Images de référence design (ne font pas partie du site)
 www.newapology.com_work*.png

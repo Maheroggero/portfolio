@@ -350,7 +350,10 @@
                   <source srcset="images/oakley.webp" type="image/webp">
                   <img class="img-a" src="images/oakley.png" alt="Oakley" loading="lazy">
                 </picture>
-                <img class="img-b" src="Oakley/Frame.Still001.jpg" alt="Oakley alternate" loading="lazy">
+                <picture>
+                  <source srcset="Oakley/Frame.Still001.webp" type="image/webp">
+                  <img class="img-b" src="Oakley/Frame.Still001.jpg" alt="Oakley alternate" loading="lazy" decoding="async">
+                </picture>
               </div>
               <div class="project-label">
                 <span class="project-name">Oakley</span>
@@ -366,7 +369,10 @@
                   <source srcset="images/tokyo.webp" type="image/webp">
                   <img class="img-a" src="images/tokyo.png" alt="Tokyo Night Drive" loading="lazy">
                 </picture>
-                <img class="img-b" src="TokyoRender/Logo2.png" alt="Tokyo alternate" loading="lazy">
+                <picture>
+                  <source srcset="TokyoRender/Logo2.webp" type="image/webp">
+                  <img class="img-b" src="TokyoRender/Logo2.png" alt="Tokyo alternate" loading="lazy" decoding="async">
+                </picture>
               </div>
               <div class="project-label">
                 <span class="project-name">Tokyo Night Drive</span>
@@ -435,5 +441,24 @@
       <a href="projects.html">Projects</a>
     </div>
   </footer>
+  <script>
+    // ── HOVER IMAGE PRELOAD ──────────────────────────────────
+    (function () {
+      var preloader = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (!entry.isIntersecting) return;
+          var imgB = entry.target.querySelector('.img-b');
+          if (imgB && imgB.loading === 'lazy') {
+            imgB.loading = 'eager';
+          }
+          preloader.unobserve(entry.target);
+        });
+      }, { rootMargin: '0px 0px 600px 0px' });
+
+      document.querySelectorAll('.project').forEach(function (el) {
+        preloader.observe(el);
+      });
+    })();
+  </script>
 </body>
 </html>

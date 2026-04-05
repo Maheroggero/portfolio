@@ -251,7 +251,10 @@
                   <source srcset="images/nike.webp" type="image/webp">
                   <img class="img-a" src="images/nike.jpg" alt="Nike — Turn On" loading="lazy">
                 </picture>
-                <img class="img-b" src="NikeRender/billboard.png" alt="Nike alternate" loading="lazy">
+                <picture>
+                  <source srcset="NikeRender/billboard.webp" type="image/webp">
+                  <img class="img-b" src="NikeRender/billboard.png" alt="Nike alternate" loading="lazy" decoding="async">
+                </picture>
               </div>
               <div class="project-label">
                 <span class="project-name">Nike — Turn On</span>
@@ -267,7 +270,10 @@
                   <source srcset="images/prada.webp" type="image/webp">
                   <img class="img-a" src="images/prada.jpg" alt="Prada" loading="lazy">
                 </picture>
-                <img class="img-b" src="prada/Mockup_city.jpg" alt="Prada alternate" loading="lazy">
+                <picture>
+                  <source srcset="prada/Mockup_city.webp" type="image/webp">
+                  <img class="img-b" src="prada/Mockup_city.jpg" alt="Prada alternate" loading="lazy" decoding="async">
+                </picture>
               </div>
               <div class="project-label">
                 <span class="project-name">Prada</span>
@@ -335,5 +341,24 @@
       <a href="projects.html">Projects</a>
     </div>
   </footer>
+  <script>
+    // ── HOVER IMAGE PRELOAD ──────────────────────────────────
+    (function () {
+      var preloader = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (!entry.isIntersecting) return;
+          var imgB = entry.target.querySelector('.img-b');
+          if (imgB && imgB.loading === 'lazy') {
+            imgB.loading = 'eager';
+          }
+          preloader.unobserve(entry.target);
+        });
+      }, { rootMargin: '0px 0px 600px 0px' });
+
+      document.querySelectorAll('.project').forEach(function (el) {
+        preloader.observe(el);
+      });
+    })();
+  </script>
 </body>
 </html>

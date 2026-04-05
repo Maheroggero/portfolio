@@ -208,7 +208,7 @@
 </picture></div>
       </div>
       <div class="img-row full-wide">
-        <div class="img-wrap"><video src="NikeRender/nikeanim.mp4" autoplay muted loop playsinline></video></div>
+        <div class="img-wrap"><video data-src="https://res.cloudinary.com/dfgqyhbgq/video/upload/q_auto,f_auto/portfolio/nike.mp4" poster="images/nike_poster.jpg" preload="none" autoplay muted loop playsinline class="lazy-video"></video></div>
       </div>
       <div class="img-row full-wide">
         <div class="img-wrap"><picture>
@@ -250,7 +250,10 @@
                   <source srcset="images/tam.webp" type="image/webp">
                   <img class="img-a" src="images/tam.jpg" alt="TAM" loading="lazy">
                 </picture>
-                <img class="img-b" src="TamRender/Mockup1.png" alt="TAM alternate" loading="lazy">
+                <picture>
+                  <source srcset="TamRender/Mockup1.webp" type="image/webp">
+                  <img class="img-b" src="TamRender/Mockup1.png" alt="TAM alternate" loading="lazy" decoding="async">
+                </picture>
               </div>
               <div class="project-label">
                 <span class="project-name">TAM Gratuit Pour Tous</span>
@@ -266,7 +269,7 @@
                   <source srcset="images/photography.webp" type="image/webp">
                   <img class="img-a" src="images/photography.jpg" alt="Series 01" loading="lazy">
                 </picture>
-                <img class="img-b" src="https://placehold.co/600x800/dedad4/9a9994" alt="Series 01 alternate" loading="lazy">
+                <img class="img-b" src="https://placehold.co/600x800/dedad4/9a9994" alt="Series 01 alternate" loading="lazy" decoding="async">
               </div>
               <div class="project-label">
                 <span class="project-name">Series 01</span>
@@ -334,5 +337,25 @@
       <a href="projects.html">Projects</a>
     </div>
   </footer>
+  <script>
+    // ── HOVER IMAGE PRELOAD ──────────────────────────────────
+    (function () {
+      var preloader = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (!entry.isIntersecting) return;
+          var imgB = entry.target.querySelector('.img-b');
+          if (imgB && imgB.loading === 'lazy') {
+            imgB.loading = 'eager';
+          }
+          preloader.unobserve(entry.target);
+        });
+      }, { rootMargin: '0px 0px 600px 0px' });
+
+      document.querySelectorAll('.project').forEach(function (el) {
+        preloader.observe(el);
+      });
+    })();
+  </script>
+  <script src="scripts.js"></script>
 </body>
 </html>
