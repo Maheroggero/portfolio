@@ -55,59 +55,19 @@
     }
     .logo:hover { opacity: 0.4; }
 
-    /* ── CUSTOM CURSOR ────────────────────────────── */
-    @media (hover: hover) {
-      *, a, button { cursor: none !important; }
-
-      #c-dot {
-        position: fixed; top: 0; left: 0;
-        width: 5px; height: 5px; margin: -2.5px 0 0 -2.5px;
-        background: var(--ink);
-        border-radius: 50%;
-        pointer-events: none; z-index: 9999;
-        will-change: transform;
-        transition: opacity 0.2s;
-      }
-
-      #c-ring-wrap {
-        position: fixed; top: 0; left: 0;
-        pointer-events: none; z-index: 9998;
-        will-change: transform;
-      }
-
-      #c-ring {
-        width: 32px; height: 32px; margin: -16px 0 0 -16px;
-        border: 1px solid rgba(20,20,18,0.55);
-        border-radius: 50%;
-        display: flex; align-items: center; justify-content: center;
-        transition: width 0.38s cubic-bezier(0.25,0,0.1,1),
-                    height 0.38s cubic-bezier(0.25,0,0.1,1),
-                    margin 0.38s cubic-bezier(0.25,0,0.1,1),
-                    background 0.38s,
-                    border-color 0.38s,
-                    opacity 0.2s;
-      }
-
-      #c-ring.is-link {
-        width: 16px; height: 16px; margin: -8px 0 0 -8px;
-        background: var(--ink); border-color: var(--ink);
-      }
-
-      #c-ring.is-view {
-        width: 62px; height: 62px; margin: -31px 0 0 -31px;
-        background: var(--ink); border-color: var(--ink);
-      }
-
-      #c-ring .c-label {
-        font-family: 'DM Sans', sans-serif;
-        font-size: 9px; font-weight: 400; letter-spacing: 0.12em;
-        text-transform: uppercase; color: #FFFFFF;
-        opacity: 0; transition: opacity 0.28s;
-        user-select: none; pointer-events: none;
-      }
-
-      #c-ring.is-view .c-label { opacity: 1; }
+    /* ── FOOTER ──────────────────────────────────────── */
+    .site-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 18px clamp(24px, 4vw, 56px);
+      border-top: 1px solid var(--border);
+      margin-top: 20vh;
     }
+    .footer-copy { font-size: 13px; color: var(--gray); }
+    .footer-links { display: flex; gap: 28px; }
+    .footer-links a { font-size: 13px; color: var(--gray); transition: color 0.2s; }
+    .footer-links a:hover { color: var(--ink); }
 
     .nav-links {
       display: flex;
@@ -268,8 +228,6 @@
   </style>
 </head>
 <body>
-  <div id="c-dot"></div>
-  <div id="c-ring-wrap"><div id="c-ring"><span class="c-label">View</span></div></div>
 
   <nav>
     <a href="index.html" class="logo">Mahe Roggero</a>
@@ -445,40 +403,6 @@
     </div>
   </div>
 
-  <script>
-    /* ── CUSTOM CURSOR ───────────────────────────────── */
-    (function(){
-      var d = document.getElementById('c-dot');
-      var w = document.getElementById('c-ring-wrap');
-      var r = document.getElementById('c-ring');
-      if (!d || !w || window.matchMedia('(hover: none)').matches) return;
-
-      var mx = -100, my = -100, rx = -100, ry = -100;
-
-      document.addEventListener('mousemove', function(e){ mx = e.clientX; my = e.clientY; });
-      document.addEventListener('mouseleave', function(){ d.style.opacity='0'; w.style.opacity='0'; });
-      document.addEventListener('mouseenter', function(){ d.style.opacity='1'; w.style.opacity='1'; });
-
-      document.querySelectorAll('a, button').forEach(function(el){
-        el.addEventListener('mouseenter', function(){ r.classList.add('is-link'); d.style.opacity='0'; });
-        el.addEventListener('mouseleave', function(){ r.classList.remove('is-link'); d.style.opacity='1'; });
-      });
-
-      document.querySelectorAll('.project-img').forEach(function(el){
-        el.addEventListener('mouseenter', function(){ r.classList.add('is-view'); r.classList.remove('is-link'); d.style.opacity='0'; });
-        el.addEventListener('mouseleave', function(){ r.classList.remove('is-view'); d.style.opacity='1'; });
-      });
-
-      function tick(){
-        rx += (mx - rx) * 0.1;
-        ry += (my - ry) * 0.1;
-        d.style.transform = 'translate('+mx+'px,'+my+'px)';
-        w.style.transform = 'translate('+rx+'px,'+ry+'px)';
-        requestAnimationFrame(tick);
-      }
-      requestAnimationFrame(tick);
-    })();
-  </script>
 
   <script>
     const observer = new IntersectionObserver((entries) => {
@@ -592,6 +516,15 @@
       });
     })();
   </script>
+
+  <footer class="site-footer">
+    <span class="footer-copy">© 2026 Mahé Roggero</span>
+    <div class="footer-links">
+      <a href="https://www.instagram.com/maheroggero/" target="_blank" rel="noopener noreferrer">Instagram</a>
+      <a href="mailto:mahe0roggero@gmail.com">mahe0roggero@gmail.com</a>
+      <a href="about.html">About</a>
+    </div>
+  </footer>
 
 </body>
 </html>

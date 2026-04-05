@@ -45,6 +45,20 @@
     .logo { font-size: 13px; font-weight: 500; letter-spacing: 0.01em; transition: opacity 0.2s; }
     .logo:hover { opacity: 0.4; }
 
+    /* ── FOOTER ───────────────────────────────────────── */
+    .site-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 18px clamp(24px, 4vw, 56px);
+      border-top: 1px solid var(--border);
+      margin-top: 20vh;
+    }
+    .footer-copy { font-size: 13px; color: var(--gray); }
+    .footer-links { display: flex; gap: 28px; }
+    .footer-links a { font-size: 13px; color: var(--gray); transition: color 0.2s; }
+    .footer-links a:hover { color: var(--ink); }
+
     .nav-links { display: flex; gap: 28px; justify-self: start; }
     .nav-links a { font-size: 13px; font-weight: 400; color: var(--gray); transition: color 0.2s; }
     .nav-links a:hover { color: var(--ink); }
@@ -119,6 +133,37 @@
       .img-row.two-col { flex-direction: column; }
       .spacer { height: 10vh; }
     }
+
+    /* ── RELATED SECTION ── */
+    .related-section {
+      border-top: 1px solid var(--border);
+      padding: 48px 0 80px;
+      margin-top: 64px;
+      opacity: 0;
+    }
+    .related-section.visible { animation: fadeUp 0.65s cubic-bezier(0.25, 0, 0.1, 1) both; }
+    .related-heading {
+      font-size: 11px;
+      font-weight: 300;
+      color: var(--gray);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      margin-bottom: 28px;
+    }
+    .related-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+    .related-item { display: flex; flex-direction: column; gap: 8px; }
+    .related-tag { font-size: 10px; font-weight: 300; color: var(--gray); text-transform: uppercase; letter-spacing: 0.08em; }
+    .project { display: block; cursor: pointer; }
+    .project-img { position: relative; overflow: hidden; background: #F0EFE9; aspect-ratio: 5/4; }
+    .project-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .project-img picture { display: contents; }
+    .img-a { position: relative; z-index: 1; transition: opacity 0.45s ease; }
+    .img-b { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: 2; opacity: 0; transition: opacity 0.45s ease; }
+    .project:hover .img-b { opacity: 1; }
+    .project-label { padding-top: 8px; }
+    .project-name { display: block; font-size: 12px; font-weight: 400; color: var(--ink); line-height: 1.4; }
+    .project-type { display: block; font-size: 11px; font-weight: 300; color: var(--gray); margin-top: 1px; }
+    @media (max-width: 480px) { .related-grid { grid-template-columns: 1fr; } }
   </style>
 </head>
 <body>
@@ -192,6 +237,45 @@
   <img src="restaurantRender/updated3.jpg" alt="Vecchia Updated 3" loading="lazy">
 </picture></div>
       </div>
+
+      <div class="related-section">
+        <div class="related-heading">Explore more work</div>
+        <div class="related-grid">
+
+          <div class="related-item">
+            <a href="prada.html" class="project related-card">
+              <div class="project-img">
+                <picture>
+                  <source srcset="images/prada.webp" type="image/webp">
+                  <img class="img-a" src="images/prada.jpg" alt="Prada" loading="lazy">
+                </picture>
+                <img class="img-b" src="prada/Mockup_city.jpg" alt="Prada alternate" loading="lazy">
+              </div>
+              <div class="project-label">
+                <span class="project-name">Prada</span>
+                <span class="project-type">Visual Identity</span>
+              </div>
+            </a>
+          </div>
+
+          <div class="related-item">
+            <a href="tam.html" class="project related-card">
+              <div class="project-img">
+                <picture>
+                  <source srcset="images/tam.webp" type="image/webp">
+                  <img class="img-a" src="images/tam.jpg" alt="TAM Gratuit Pour Tous" loading="lazy">
+                </picture>
+                <img class="img-b" src="TamRender/Mockup1.png" alt="TAM alternate" loading="lazy">
+              </div>
+              <div class="project-label">
+                <span class="project-name">TAM Gratuit Pour Tous</span>
+                <span class="project-type">Brand Campaign</span>
+              </div>
+            </a>
+          </div>
+
+        </div>
+      </div>
     </div>
   </div>
 
@@ -205,8 +289,49 @@
         observer.unobserve(el);
       });
     }, { threshold: 0.05, rootMargin: '0px 0px 200px 0px' });
-    document.querySelectorAll('.sidebar, .img-row').forEach(el => observer.observe(el));
+    document.querySelectorAll('.sidebar, .img-row, .related-section').forEach(el => observer.observe(el));
+
+    // ── ENTRANCE depuis project ──
+    if (sessionStorage.getItem('vt-from') === 'project') {
+      sessionStorage.removeItem('vt-from');
+      var layout = document.querySelector('.body-layout');
+      var spacer = document.querySelector('.spacer');
+      [layout, spacer].filter(Boolean).forEach(function(el) {
+        el.style.opacity = '0';
+        el.style.transition = 'none';
+      });
+      requestAnimationFrame(function() { requestAnimationFrame(function() {
+        [layout, spacer].filter(Boolean).forEach(function(el) {
+          el.style.transition = 'opacity 0.55s ease';
+          el.style.opacity = '1';
+        });
+      }); });
+    }
+
+    // ── RELATED PROJECTS TRANSITION ──
+    document.querySelectorAll('.related-card').forEach(function(link) {
+      link.addEventListener('click', function(e) {
+        e.preventDefault();
+        var href = this.getAttribute('href');
+        var layout = document.querySelector('.body-layout');
+        var spacer = document.querySelector('.spacer');
+        sessionStorage.setItem('vt-from', 'project');
+        [layout, spacer].filter(Boolean).forEach(function(el) {
+          el.style.transition = 'opacity 0.35s ease';
+          el.style.opacity = '0';
+        });
+        setTimeout(function() { window.location.href = href; }, 360);
+      });
+    });
   </script>
 
+  <footer class="site-footer">
+    <span class="footer-copy">© 2026 Mahé Roggero</span>
+    <div class="footer-links">
+      <a href="https://www.instagram.com/maheroggero/" target="_blank" rel="noopener noreferrer">Instagram</a>
+      <a href="mailto:mahe0roggero@gmail.com">mahe0roggero@gmail.com</a>
+      <a href="projects.html">Projects</a>
+    </div>
+  </footer>
 </body>
 </html>

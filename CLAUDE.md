@@ -10,22 +10,27 @@
 
 ## Local Server
 - **Always serve on localhost** — never screenshot a `file:///` URL.
-- Start the dev server: `node serve.mjs` (serves the project root at `http://localhost:3000`)
-- `serve.mjs` lives in the project root. Start it in the background before taking any screenshots.
-- If the server is already running, do not start a second instance.
+- Start the dev server: `python -m http.server 3000` (serves the project root at `http://localhost:3000`)
+- Run it in the background before taking any screenshots.
+- If the server is already running on port 3000, do not start a second instance (check with `curl -s -o /dev/null -w "%{http_code}" http://localhost:3000`).
 
 ## Screenshot Workflow
-- Puppeteer is installed at `C:/Users/nateh/AppData/Local/Temp/puppeteer-test/`. Chrome cache is at `C:/Users/nateh/.cache/puppeteer/`.
-- **Always screenshot from localhost:** `node screenshot.mjs http://localhost:3000`
+- **Python Playwright** is used for screenshots (Node.js is NOT installed on this machine).
+- **Always screenshot from localhost:** `python screenshot.py http://localhost:3000`
+- Optional label suffix: `python screenshot.py http://localhost:3000 label` → saves as `screenshot-N-label.png`
 - Screenshots are saved automatically to `./temporary screenshots/screenshot-N.png` (auto-incremented, never overwritten).
-- Optional label suffix: `node screenshot.mjs http://localhost:3000 label` → saves as `screenshot-N-label.png`
-- `screenshot.mjs` lives in the project root. Use it as-is.
+- `screenshot.py` lives in the project root. Use it as-is.
 - After screenshotting, read the PNG from `temporary screenshots/` with the Read tool — Claude can see and analyze the image directly.
 - When comparing, be specific: "heading is 32px but reference shows ~24px", "card gap is 16px but should be 24px"
 - Check: spacing/padding, font size/weight/line-height, colors (exact hex), alignment, border-radius, shadows, image sizing
 
+## Auto-Screenshot Rule
+- **After every visual change** (HTML/CSS edit), automatically take a screenshot without waiting for the user to ask.
+- Compare before/after and report any visible differences.
+- Do at least 2 screenshot passes after a change before declaring it done.
+
 ## Output Defaults
-- Single `index.html` file, all styles inline, unless user says otherwise
+- Single HTML file per page, all styles inline, unless user says otherwise
 - Tailwind CSS via CDN: `<script src="https://cdn.tailwindcss.com"></script>`
 - Placeholder images: `https://placehold.co/WIDTHxHEIGHT`
 - Mobile-first responsive
