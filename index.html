@@ -461,6 +461,16 @@
         }
       }
 
+      // ── BFCACHE RECOVERY ──
+      window.addEventListener('pageshow', function(e) {
+        if (e.persisted) {
+          header.style.transition = 'none';
+          header.style.transform  = '';
+          content.style.transition = 'none';
+          content.style.opacity    = '1';
+        }
+      });
+
       // EXIT : vers projects
       var projLink = document.querySelector('a[href="projects.html"]');
       if (projLink) projLink.addEventListener('click', function(e) { e.preventDefault(); exitTo('projects.html'); });

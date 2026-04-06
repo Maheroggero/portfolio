@@ -491,6 +491,15 @@
         }); });
       }
 
+      // ── BFCACHE RECOVERY ──
+      window.addEventListener('pageshow', function(e) {
+        if (e.persisted) {
+          nav.style.transition = 'none';
+          nav.style.transform  = '';
+          fadeContent('1', '0', 0);
+        }
+      });
+
       // EXIT : vers home
       var logoLink = document.querySelector('a.logo[href="index.html"]');
       if (logoLink) logoLink.addEventListener('click', function(e) {
