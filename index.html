@@ -94,10 +94,11 @@
       display: grid;
       grid-template-columns: clamp(180px, 29vw, 420px) 1fr;
       align-items: center;
-      padding: var(--gap) clamp(24px, 4vw, 56px);
+      padding: 18px clamp(24px, 4vw, 56px);
       flex-shrink: 0;
       background: transparent;
       will-change: transform;
+      line-height: 1;
     }
 
     .logo {
@@ -137,6 +138,9 @@
     .carousel-wrapper.dragging {
       cursor: grabbing;
     }
+
+    .carousel-track img[data-href] { cursor: pointer; }
+    .carousel-wrapper.dragging .carousel-track img { cursor: grabbing; }
 
     /* ── TRACK ───────────────────────────────────────── */
     .carousel-track {
@@ -224,80 +228,7 @@
           <source srcset="images/tam.webp" type="image/webp">
           <img src="images/tam.jpg"          data-href="/tam"          alt="TAM">
         </picture>
-        <!-- Set 2 — clones, no data-href -->
-        <picture>
-          <source srcset="images/tokyo.webp" type="image/webp">
-          <img src="images/tokyo.png"        alt="">
-        </picture>
-        <picture>
-          <source srcset="images/prada.webp" type="image/webp">
-          <img src="images/prada.jpg"        alt="">
-        </picture>
-        <picture>
-          <source srcset="images/nike.webp" type="image/webp">
-          <img src="images/nike.jpg"         alt="">
-        </picture>
-        <picture>
-          <source srcset="images/oakley.webp" type="image/webp">
-          <img src="images/oakley.png"       alt="">
-        </picture>
-        <picture>
-          <source srcset="images/morocco.webp" type="image/webp">
-          <img src="images/morocco.jpg"      alt="">
-        </picture>
-        <picture>
-          <source srcset="images/bold-agency.webp" type="image/webp">
-          <img src="images/bold-agency.jpg"  alt="">
-        </picture>
-        <picture>
-          <source srcset="images/photography.webp" type="image/webp">
-          <img src="images/photography.jpg"  alt="">
-        </picture>
-        <picture>
-          <source srcset="images/vecchia.webp" type="image/webp">
-          <img src="images/vecchia.png"      alt="">
-        </picture>
-        <picture>
-          <source srcset="images/tam.webp" type="image/webp">
-          <img src="images/tam.jpg"          alt="">
-        </picture>
-        <!-- Set 3 — clones, no data-href -->
-        <picture>
-          <source srcset="images/tokyo.webp" type="image/webp">
-          <img src="images/tokyo.png"        alt="">
-        </picture>
-        <picture>
-          <source srcset="images/prada.webp" type="image/webp">
-          <img src="images/prada.jpg"        alt="">
-        </picture>
-        <picture>
-          <source srcset="images/nike.webp" type="image/webp">
-          <img src="images/nike.jpg"         alt="">
-        </picture>
-        <picture>
-          <source srcset="images/oakley.webp" type="image/webp">
-          <img src="images/oakley.png"       alt="">
-        </picture>
-        <picture>
-          <source srcset="images/morocco.webp" type="image/webp">
-          <img src="images/morocco.jpg"      alt="">
-        </picture>
-        <picture>
-          <source srcset="images/bold-agency.webp" type="image/webp">
-          <img src="images/bold-agency.jpg"  alt="">
-        </picture>
-        <picture>
-          <source srcset="images/photography.webp" type="image/webp">
-          <img src="images/photography.jpg"  alt="">
-        </picture>
-        <picture>
-          <source srcset="images/vecchia.webp" type="image/webp">
-          <img src="images/vecchia.png"      alt="">
-        </picture>
-        <picture>
-          <source srcset="images/tam.webp" type="image/webp">
-          <img src="images/tam.jpg"          alt="">
-        </picture>
+        <!-- Sets 2 & 3 are injected by JS (cloneNode preserves data-href) -->
       </div>
     </div>
 
@@ -310,6 +241,14 @@
     const SPEED    = 0.38;   // px per frame
     const GAP      = 14;     // matches CSS --gap
     const SET_SIZE = 9;
+
+    // Inject clones × 2 so data-href is preserved on every visible image
+    (function injectClones() {
+      const originals = Array.from(track.querySelectorAll('picture'));
+      for (let r = 0; r < 2; r++) {
+        originals.forEach(pic => track.appendChild(pic.cloneNode(true)));
+      }
+    })();
 
     let pos         = 0;
     let setWidth    = 0;
@@ -325,20 +264,24 @@
     let lastDragTime      = 0;
     const velSamples      = [];  // rolling velocity average
 
-    /* ── Measure width of one image set ────────────── */
+    /* ── Measure width of one image set (sub-pixel precise) ── */
     function measureSet() {
       const imgs = track.querySelectorAll('img');
       let w = 0;
       for (let i = 0; i < SET_SIZE; i++) {
-        w += imgs[i].offsetWidth + GAP;
+        w += imgs[i].getBoundingClientRect().width + GAP;
       }
       setWidth = w;
     }
 
+    /* ── Re-measure on resize (images are height:100% so width changes) ── */
+    window.addEventListener('resize', measureSet);
+
     /* ── Wrap position for infinite loop ────────────── */
     function wrap() {
       if (setWidth <= 0) return;
-      pos = ((pos % setWidth) + setWidth) % setWidth;
+      if (pos >= setWidth) pos -= setWidth;
+      else if (pos < 0)   pos += setWidth;
     }
 
     /* ── Animation loop ─────────────────────────────── */
