@@ -401,10 +401,10 @@
 <body>
 
   <nav>
-    <a href="index.html" class="logo">Mahe Roggero</a>
+    <a href="/" class="logo">Mahe Roggero</a>
     <div class="nav-links">
-      <a href="projects.html">Projects</a>
-      <a href="about.html" class="active">About</a>
+      <a href="/projects">Projects</a>
+      <a href="/about" class="active">About</a>
     </div>
   </nav>
 
@@ -610,7 +610,7 @@
       });
 
       // EXIT : vers home
-      var logoLink = document.querySelector('a.logo[href="index.html"], a.logo[href="/"]');
+      var logoLink = document.querySelector('a.logo[href="/"], a.logo[href="/"]');
       if (logoLink) logoLink.addEventListener('click', function(e) {
         e.preventDefault();
         sessionStorage.setItem('vt-from', 'about');
@@ -621,16 +621,16 @@
           sessionStorage.setItem('vt-nav-animated-return', '1');
         }
         setContent('0', '0.7', 0);
-        setTimeout(function() { window.location.href = 'index.html'; }, 720);
+        setTimeout(function() { window.location.href = '/'; }, 720);
       });
 
       // EXIT : vers projects
-      var projLink = document.querySelector('a[href="projects.html"], a[href="/projects"]');
+      var projLink = document.querySelector('a[href="/projects"], a[href="/projects"]');
       if (projLink) projLink.addEventListener('click', function(e) {
         e.preventDefault();
         sessionStorage.setItem('vt-from', 'about-projects');
         setContent('0', '0.35', 0);
-        setTimeout(function() { window.location.href = 'projects.html'; }, 360);
+        setTimeout(function() { window.location.href = '/projects'; }, 360);
       });
     })();
   </script>
@@ -640,7 +640,7 @@
     <div class="footer-links">
       <a href="https://www.instagram.com/maheroggero/" target="_blank" rel="noopener noreferrer">Instagram</a>
       <a href="mailto:mahe0roggero@gmail.com">mahe0roggero@gmail.com</a>
-      <a href="index.html">Home</a>
+      <a href="/">Home</a>
     </div>
   </footer>
 

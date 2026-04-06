@@ -140,10 +140,10 @@
     <div class="negative-space"></div>
 
     <header class="site-header">
-      <a href="index.html" class="logo">Mahe Roggero</a>
+      <a href="/" class="logo">Mahe Roggero</a>
       <nav class="nav-links">
-        <a href="projects.html">Projects</a>
-        <a href="about.html">About</a>
+        <a href="/projects">Projects</a>
+        <a href="/about">About</a>
       </nav>
     </header>
 
@@ -152,39 +152,39 @@
         <!-- Set 1 — with data-href for click navigation -->
         <picture>
           <source srcset="images/tokyo.webp" type="image/webp">
-          <img src="images/tokyo.png"        data-href="tokyo.html"        alt="Tokyo">
+          <img src="images/tokyo.png"        data-href="/tokyo"        alt="Tokyo">
         </picture>
         <picture>
           <source srcset="images/prada.webp" type="image/webp">
-          <img src="images/prada.jpg"        data-href="prada.html"        alt="Prada">
+          <img src="images/prada.jpg"        data-href="/prada"        alt="Prada">
         </picture>
         <picture>
           <source srcset="images/nike.webp" type="image/webp">
-          <img src="images/nike.jpg"         data-href="nike.html"         alt="Nike">
+          <img src="images/nike.jpg"         data-href="/nike"         alt="Nike">
         </picture>
         <picture>
           <source srcset="images/oakley.webp" type="image/webp">
-          <img src="images/oakley.png"       data-href="oakley.html"       alt="Oakley">
+          <img src="images/oakley.png"       data-href="/oakley"       alt="Oakley">
         </picture>
         <picture>
           <source srcset="images/morocco.webp" type="image/webp">
-          <img src="images/morocco.jpg"      data-href="morocco.html"      alt="Morocco">
+          <img src="images/morocco.jpg"      data-href="/morocco"      alt="Morocco">
         </picture>
         <picture>
           <source srcset="images/bold-agency.webp" type="image/webp">
-          <img src="images/bold-agency.jpg"  data-href="bold-agency.html"  alt="Bold Agency">
+          <img src="images/bold-agency.jpg"  data-href="/bold-agency"  alt="Bold Agency">
         </picture>
         <picture>
           <source srcset="images/photography.webp" type="image/webp">
-          <img src="images/photography.jpg"  data-href="photography.html"  alt="Photography">
+          <img src="images/photography.jpg"  data-href="/photography"  alt="Photography">
         </picture>
         <picture>
           <source srcset="images/vecchia.webp" type="image/webp">
-          <img src="images/vecchia.png"      data-href="vecchia.html"      alt="Vecchia">
+          <img src="images/vecchia.png"      data-href="/vecchia"      alt="Vecchia">
         </picture>
         <picture>
           <source srcset="images/tam.webp" type="image/webp">
-          <img src="images/tam.jpg"          data-href="tam.html"          alt="TAM">
+          <img src="images/tam.jpg"          data-href="/tam"          alt="TAM">
         </picture>
         <!-- Set 2 — clones, no data-href -->
         <picture>
@@ -472,12 +472,12 @@
       });
 
       // EXIT : vers projects
-      var projLink = document.querySelector('a[href="projects.html"], a[href="/projects"]');
-      if (projLink) projLink.addEventListener('click', function(e) { e.preventDefault(); exitTo('projects.html'); });
+      var projLink = document.querySelector('a[href="/projects"], a[href="/projects"]');
+      if (projLink) projLink.addEventListener('click', function(e) { e.preventDefault(); exitTo('/projects'); });
 
       // EXIT : vers about
-      var aboutLink = document.querySelector('a[href="about.html"], a[href="/about"]');
-      if (aboutLink) aboutLink.addEventListener('click', function(e) { e.preventDefault(); exitTo('about.html'); });
+      var aboutLink = document.querySelector('a[href="/about"], a[href="/about"]');
+      if (aboutLink) aboutLink.addEventListener('click', function(e) { e.preventDefault(); exitTo('/about'); });
     })();
   </script>
 

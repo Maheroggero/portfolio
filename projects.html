@@ -230,10 +230,10 @@
 <body>
 
   <nav>
-    <a href="index.html" class="logo">Mahe Roggero</a>
+    <a href="/" class="logo">Mahe Roggero</a>
     <div class="nav-links">
-      <a href="projects.html" class="active">Projects</a>
-      <a href="about.html">About</a>
+      <a href="/projects" class="active">Projects</a>
+      <a href="/about">About</a>
     </div>
   </nav>
 
@@ -248,7 +248,7 @@
     <div class="projects-grid">
 
       <!-- Row A: landscape 4/3 -->
-      <a href="tokyo.html" class="project">
+      <a href="/tokyo" class="project">
         <div class="project-img">
           <picture>
             <source srcset="images/tokyo.webp" type="image/webp">
@@ -265,7 +265,7 @@
         </div>
       </a>
 
-      <a href="prada.html" class="project">
+      <a href="/prada" class="project">
         <div class="project-img">
           <picture>
             <source srcset="images/prada.webp" type="image/webp">
@@ -282,7 +282,7 @@
         </div>
       </a>
 
-      <a href="nike.html" class="project">
+      <a href="/nike" class="project">
         <div class="project-img">
           <picture>
             <source srcset="images/nike.webp" type="image/webp">
@@ -300,7 +300,7 @@
       </a>
 
       <!-- Row B: portrait 3/4 -->
-      <a href="oakley.html" class="project">
+      <a href="/oakley" class="project">
         <div class="project-img">
           <picture>
             <source srcset="images/oakley.webp" type="image/webp">
@@ -317,7 +317,7 @@
         </div>
       </a>
 
-      <a href="morocco.html" class="project">
+      <a href="/morocco" class="project">
         <div class="project-img">
           <picture>
             <source srcset="images/morocco.webp" type="image/webp">
@@ -334,7 +334,7 @@
         </div>
       </a>
 
-      <a href="bold-agency.html" class="project">
+      <a href="/bold-agency" class="project">
         <div class="project-img">
           <picture>
             <source srcset="images/bold-agency.webp" type="image/webp">
@@ -352,7 +352,7 @@
       </a>
 
       <!-- Row C: landscape 4/3 -->
-      <a href="photography.html" class="project">
+      <a href="/photography" class="project">
         <div class="project-img">
           <picture>
             <source srcset="images/photography.webp" type="image/webp">
@@ -366,7 +366,7 @@
         </div>
       </a>
 
-      <a href="vecchia.html" class="project">
+      <a href="/vecchia" class="project">
         <div class="project-img">
           <picture>
             <source srcset="images/vecchia.webp" type="image/webp">
@@ -383,7 +383,7 @@
         </div>
       </a>
 
-      <a href="tam.html" class="project">
+      <a href="/tam" class="project">
         <div class="project-img">
           <picture>
             <source srcset="images/tam.webp" type="image/webp">
@@ -501,7 +501,7 @@
       });
 
       // EXIT : vers home
-      var logoLink = document.querySelector('a.logo[href="index.html"], a.logo[href="/"]');
+      var logoLink = document.querySelector('a.logo[href="/"], a.logo[href="/"]');
       if (logoLink) logoLink.addEventListener('click', function(e) {
         e.preventDefault();
         sessionStorage.setItem('vt-from', 'projects');
@@ -512,16 +512,16 @@
           sessionStorage.setItem('vt-nav-animated-return', '1');
         }
         fadeContent('0', '0.7', 0);
-        setTimeout(function() { window.location.href = 'index.html'; }, 720);
+        setTimeout(function() { window.location.href = '/'; }, 720);
       });
 
       // EXIT : vers about
-      var aboutLink = document.querySelector('a[href="about.html"], a[href="/about"]');
+      var aboutLink = document.querySelector('a[href="/about"], a[href="/about"]');
       if (aboutLink) aboutLink.addEventListener('click', function(e) {
         e.preventDefault();
         sessionStorage.setItem('vt-from', 'projects-about');
         fadeContent('0', '0.35', 0);
-        setTimeout(function() { window.location.href = 'about.html'; }, 360);
+        setTimeout(function() { window.location.href = '/about'; }, 360);
       });
     })();
   </script>
@@ -531,7 +531,7 @@
     <div class="footer-links">
       <a href="https://www.instagram.com/maheroggero/" target="_blank" rel="noopener noreferrer">Instagram</a>
       <a href="mailto:mahe0roggero@gmail.com">mahe0roggero@gmail.com</a>
-      <a href="about.html">About</a>
+      <a href="/about">About</a>
     </div>
   </footer>
 
