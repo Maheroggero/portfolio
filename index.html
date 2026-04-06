@@ -472,11 +472,11 @@
       });
 
       // EXIT : vers projects
-      var projLink = document.querySelector('a[href="projects.html"]');
+      var projLink = document.querySelector('a[href="projects.html"], a[href="/projects"]');
       if (projLink) projLink.addEventListener('click', function(e) { e.preventDefault(); exitTo('projects.html'); });
 
       // EXIT : vers about
-      var aboutLink = document.querySelector('a[href="about.html"]');
+      var aboutLink = document.querySelector('a[href="about.html"], a[href="/about"]');
       if (aboutLink) aboutLink.addEventListener('click', function(e) { e.preventDefault(); exitTo('about.html'); });
     })();
   </script>

@@ -610,7 +610,7 @@
       });
 
       // EXIT : vers home
-      var logoLink = document.querySelector('a.logo[href="index.html"]');
+      var logoLink = document.querySelector('a.logo[href="index.html"], a.logo[href="/"]');
       if (logoLink) logoLink.addEventListener('click', function(e) {
         e.preventDefault();
         sessionStorage.setItem('vt-from', 'about');
@@ -625,7 +625,7 @@
       });
 
       // EXIT : vers projects
-      var projLink = document.querySelector('a[href="projects.html"]');
+      var projLink = document.querySelector('a[href="projects.html"], a[href="/projects"]');
       if (projLink) projLink.addEventListener('click', function(e) {
         e.preventDefault();
         sessionStorage.setItem('vt-from', 'about-projects');
