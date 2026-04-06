@@ -66,9 +66,9 @@
     /* ── NAV ─────────────────────── */
     nav {
       display: grid;
-      grid-template-columns: clamp(180px, 29vw, 420px) 1fr;
+      grid-template-columns: clamp(170px, 20vw, 300px) 1fr;
       align-items: center;
-      padding: 18px clamp(24px, 4vw, 56px);
+      padding: 18px 20px;
       position: sticky;
       top: 0;
       background: transparent;
@@ -90,7 +90,7 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 18px clamp(24px, 4vw, 56px);
+      padding: 18px 20px;
       border-top: 1px solid var(--border);
       margin-top: 20vh;
     }
@@ -121,8 +121,8 @@
     /* ── BODY LAYOUT ─────────────── */
     .body-layout {
       display: grid;
-      grid-template-columns: clamp(180px, 29vw, 420px) 1fr;
-      padding: 0 32px clamp(80px, 12vw, 140px) clamp(24px, 4vw, 56px);
+      grid-template-columns: clamp(170px, 20vw, 300px) 1fr;
+      padding: 0 20px clamp(80px, 12vw, 140px) 20px;
     }
 
     .sidebar {
@@ -403,7 +403,7 @@
 
     /* ── RESPONSIVE ──────────────── */
     @media (max-width: 900px) {
-      .body-layout { grid-template-columns: 1fr; padding-left: clamp(24px, 4vw, 56px); }
+      .body-layout { grid-template-columns: 1fr; padding-left: 20px; }
       .sidebar { position: static; padding-bottom: 16px; }
       nav { grid-template-columns: 1fr auto; }
     }

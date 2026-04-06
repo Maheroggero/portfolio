@@ -58,9 +58,9 @@
     /* ── NAV ───────────────────────────────────── */
     nav {
       display: grid;
-      grid-template-columns: clamp(180px, 29vw, 420px) 1fr;
+      grid-template-columns: clamp(170px, 20vw, 300px) 1fr;
       align-items: center;
-      padding: 18px clamp(24px, 4vw, 56px);
+      padding: 18px 20px;
       position: sticky;
       top: 0;
       background: transparent;
@@ -93,8 +93,8 @@
     /* ── BODY LAYOUT ────────────────────────────── */
     .body-layout {
       display: grid;
-      grid-template-columns: clamp(180px, 29vw, 420px) 1fr;
-      padding: 0 32px clamp(80px, 12vw, 140px) clamp(24px, 4vw, 56px);
+      grid-template-columns: clamp(170px, 20vw, 300px) 1fr;
+      padding: 0 20px clamp(80px, 12vw, 140px) 20px;
       gap: 0;
       align-items: start;
     }
@@ -103,8 +103,8 @@
     .sidebar {
       position: fixed;
       top: calc(var(--top-gap) + 18px + 13px + 18px);
-      left: clamp(24px, 4vw, 56px);
-      width: calc(clamp(180px, 29vw, 420px) - clamp(24px, 4vw, 56px) - 20px);
+      left: 20px;
+      width: calc(clamp(170px, 20vw, 300px) - 40px);
       display: flex;
       flex-direction: column;
       gap: 20px;
@@ -206,6 +206,7 @@
     @media (max-width: 640px) {
       .img-row.two-col { flex-direction: column; }
       .spacer { height: 10vh; }
+      .body-layout { padding: 0 16px clamp(60px, 10vh, 120px) 16px; }
     }
 
     /* ── RELATED SECTION ── */

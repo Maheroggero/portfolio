@@ -92,9 +92,9 @@
     /* ── HEADER ──────────────────────────────────────── */
     .site-header {
       display: grid;
-      grid-template-columns: clamp(180px, 29vw, 420px) 1fr;
+      grid-template-columns: clamp(170px, 20vw, 300px) 1fr;
       align-items: center;
-      padding: 18px clamp(24px, 4vw, 56px);
+      padding: 18px 20px;
       flex-shrink: 0;
       background: transparent;
       will-change: transform;
@@ -171,6 +171,16 @@
       .carousel-track img {
         width: 65vw;
         height: 100%;
+      }
+    }
+
+    @media (max-width: 580px) {
+      .carousel-wrapper {
+        height: 80vh;
+      }
+
+      .carousel-track img {
+        width: 94vw;
       }
     }
 
