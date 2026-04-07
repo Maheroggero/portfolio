@@ -14,12 +14,12 @@
   <meta property="og:title" content="Series 02 — Mahe Roggero">
   <meta property="og:description" content="Series 02 — Black and white film photography by Mahe Roggero.">
   <meta property="og:url" content="https://maheroggero.com/bnw-film-photo">
-  <meta property="og:image" content="https://maheroggero.com/Bnw_film_photo/000021.BMP">
+  <meta property="og:image" content="https://maheroggero.com/Bnw_film_photo/000021.webp">
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Series 02 — Mahe Roggero">
   <meta name="twitter:description" content="Series 02 — Black and white film photography by Mahe Roggero.">
-  <meta name="twitter:image" content="https://maheroggero.com/Bnw_film_photo/000021.BMP">
+  <meta name="twitter:image" content="https://maheroggero.com/Bnw_film_photo/000021.webp">
   <!-- Google Analytics 4 -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-TERCE1QZDS"></script>
   <script>
@@ -222,42 +222,38 @@
     }
     .lightbox-img-wrap {
       max-width: 90vw; max-height: 90vh;
-      transform: scale(0.96);
-      transition: transform 0.25s ease;
+      transform: scale(0.97);
+      opacity: 0;
+      transition: transform 0.3s cubic-bezier(0.25,0.46,0.45,0.94), opacity 0.3s ease;
+      cursor: pointer;
+      user-select: none;
     }
-    .lightbox-overlay.open .lightbox-img-wrap { transform: scale(1); }
+    .lightbox-overlay.open .lightbox-img-wrap { transform: scale(1); opacity: 1; }
     .lightbox-img-wrap img {
       max-width: 90vw; max-height: 90vh;
       object-fit: contain; display: block;
       width: auto; height: auto;
+      pointer-events: none;
     }
-    .lightbox-btn {
-      position: fixed; top: 50%; transform: translateY(-50%);
-      background: rgba(255,255,255,0.1); border: none;
-      color: #fff; font-size: 28px; line-height: 1;
-      width: 52px; height: 52px; border-radius: 50%;
-      cursor: pointer; display: flex; align-items: center; justify-content: center;
-      transition: background 0.15s ease;
+    .lb-dots {
+      position: fixed;
+      bottom: 28px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 8px;
       z-index: 1001;
+      opacity: 1;
+      transition: opacity 0.5s ease;
     }
-    .lightbox-btn:hover { background: rgba(255,255,255,0.22); }
-    .lightbox-prev { left: 20px; }
-    .lightbox-next { right: 20px; }
-    .lightbox-close {
-      position: fixed; top: 20px; right: 20px;
-      background: rgba(255,255,255,0.1); border: none;
-      color: #fff; font-size: 20px; line-height: 1;
-      width: 40px; height: 40px; border-radius: 50%;
-      cursor: pointer; display: flex; align-items: center; justify-content: center;
-      transition: background 0.15s ease;
-      z-index: 1001;
+    .lb-dots.faded { opacity: 0; }
+    .lb-dot {
+      width: 5px; height: 5px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.28);
+      transition: background 0.25s ease, transform 0.25s ease;
     }
-    .lightbox-close:hover { background: rgba(255,255,255,0.22); }
-    @media (max-width: 640px) {
-      .lightbox-btn { width: 40px; height: 40px; font-size: 22px; }
-      .lightbox-prev { left: 8px; }
-      .lightbox-next { right: 8px; }
-    }
+    .lb-dot.active { background: #fff; transform: scale(1.35); }
   </style>
 </head>
 <body>
@@ -285,31 +281,31 @@
 
     <div class="project-images">
       <div class="img-row full-single">
-        <div class="img-wrap" data-index="0"><img src="Bnw_film_photo/000009.BMP" alt="Series 02 — 1" loading="eager"></div>
+        <div class="img-wrap" data-index="0"><img src="Bnw_film_photo/000009.webp" alt="Series 02 — 1" loading="eager"></div>
       </div>
       <div class="img-row full-single">
-        <div class="img-wrap" data-index="1"><img src="Bnw_film_photo/000011.BMP" alt="Series 02 — 2" loading="lazy"></div>
+        <div class="img-wrap" data-index="1"><img src="Bnw_film_photo/000011.webp" alt="Series 02 — 2" loading="lazy"></div>
       </div>
       <div class="img-row full-single">
-        <div class="img-wrap" data-index="2"><img src="Bnw_film_photo/000013.BMP" alt="Series 02 — 3" loading="lazy"></div>
+        <div class="img-wrap" data-index="2"><img src="Bnw_film_photo/000013.webp" alt="Series 02 — 3" loading="lazy"></div>
       </div>
       <div class="img-row full-single">
-        <div class="img-wrap" data-index="3"><img src="Bnw_film_photo/000021.BMP" alt="Series 02 — 4" loading="lazy"></div>
+        <div class="img-wrap" data-index="3"><img src="Bnw_film_photo/000021.webp" alt="Series 02 — 4" loading="lazy"></div>
       </div>
       <div class="img-row full-single">
-        <div class="img-wrap" data-index="4"><img src="Bnw_film_photo/000025.BMP" alt="Series 02 — 5" loading="lazy"></div>
+        <div class="img-wrap" data-index="4"><img src="Bnw_film_photo/000025.webp" alt="Series 02 — 5" loading="lazy"></div>
       </div>
       <div class="img-row full-single">
-        <div class="img-wrap" data-index="5"><img src="Bnw_film_photo/000027.BMP" alt="Series 02 — 6" loading="lazy"></div>
+        <div class="img-wrap" data-index="5"><img src="Bnw_film_photo/000027.webp" alt="Series 02 — 6" loading="lazy"></div>
       </div>
       <div class="img-row full-single">
-        <div class="img-wrap" data-index="6"><img src="Bnw_film_photo/000030.BMP" alt="Series 02 — 7" loading="lazy"></div>
+        <div class="img-wrap" data-index="6"><img src="Bnw_film_photo/000030.webp" alt="Series 02 — 7" loading="lazy"></div>
       </div>
       <div class="img-row full-single">
-        <div class="img-wrap" data-index="7"><img src="Bnw_film_photo/000035.BMP" alt="Series 02 — 8" loading="lazy"></div>
+        <div class="img-wrap" data-index="7"><img src="Bnw_film_photo/000035.webp" alt="Series 02 — 8" loading="lazy"></div>
       </div>
       <div class="img-row full-single">
-        <div class="img-wrap" data-index="8"><img src="Bnw_film_photo/000040.BMP" alt="Series 02 — 9" loading="lazy"></div>
+        <div class="img-wrap" data-index="8"><img src="Bnw_film_photo/000040.webp" alt="Series 02 — 9" loading="lazy"></div>
       </div>
 
       <div class="related-section">
@@ -319,8 +315,8 @@
           <div class="related-item">
             <a href="/photography" class="project related-card">
               <div class="project-img">
-                <img class="img-a" src="Film_photo/A022232-R1-07-5A.JPG" alt="Series 01" loading="lazy">
-                <img class="img-b" src="Film_photo/A022232-R1-08-7A.JPG" alt="Series 01 alternate" loading="lazy" decoding="async">
+                <img class="img-a" src="Film_photo/A022232-R1-07-5A.webp" alt="Series 01" loading="lazy">
+                <img class="img-b" src="Film_photo/A022232-R1-08-7A.webp" alt="Series 01 alternate" loading="lazy" decoding="async">
               </div>
               <div class="project-label">
                 <span class="project-name">Series 01</span>
@@ -374,12 +370,10 @@
 
   <!-- LIGHTBOX -->
   <div class="lightbox-overlay" id="lightbox" role="dialog" aria-modal="true" aria-label="Image viewer">
-    <button class="lightbox-close" id="lb-close" aria-label="Close">✕</button>
-    <button class="lightbox-btn lightbox-prev" id="lb-prev" aria-label="Previous">‹</button>
-    <div class="lightbox-img-wrap">
+    <div class="lightbox-img-wrap" id="lb-img-wrap">
       <img id="lb-img" src="" alt="">
     </div>
-    <button class="lightbox-btn lightbox-next" id="lb-next" aria-label="Next">›</button>
+    <div class="lb-dots" id="lb-dots"></div>
   </div>
 
   <footer class="site-footer">
@@ -460,15 +454,31 @@
   <script>
     // ── LIGHTBOX ──────────────────────────────────────────────
     (function () {
-      var overlay  = document.getElementById('lightbox');
-      var lbImg    = document.getElementById('lb-img');
-      var btnClose = document.getElementById('lb-close');
-      var btnPrev  = document.getElementById('lb-prev');
-      var btnNext  = document.getElementById('lb-next');
+      var overlay = document.getElementById('lightbox');
+      var lbImg   = document.getElementById('lb-img');
+      var imgWrap = document.getElementById('lb-img-wrap');
+      var dotsEl  = document.getElementById('lb-dots');
 
-      var wraps  = Array.from(document.querySelectorAll('.full-single .img-wrap'));
-      var images = wraps.map(function (w) { return w.querySelector('img'); });
+      var wraps   = Array.from(document.querySelectorAll('.full-single .img-wrap'));
+      var images  = wraps.map(function (w) { return w.querySelector('img'); });
       var current = 0;
+      var fadeTimer = null;
+
+      // Build position dots
+      images.forEach(function () {
+        var dot = document.createElement('span');
+        dot.className = 'lb-dot';
+        dotsEl.appendChild(dot);
+      });
+
+      function updateDots() {
+        dotsEl.querySelectorAll('.lb-dot').forEach(function (d, i) {
+          d.classList.toggle('active', i === current);
+        });
+        dotsEl.classList.remove('faded');
+        clearTimeout(fadeTimer);
+        fadeTimer = setTimeout(function () { dotsEl.classList.add('faded'); }, 1800);
+      }
 
       function openAt(index) {
         current = index;
@@ -476,11 +486,14 @@
         lbImg.alt = images[current].alt;
         overlay.classList.add('open');
         document.body.style.overflow = 'hidden';
+        updateDots();
       }
 
       function close() {
         overlay.classList.remove('open');
         document.body.style.overflow = '';
+        clearTimeout(fadeTimer);
+        dotsEl.classList.remove('faded');
       }
 
       function prev() { openAt((current - 1 + images.length) % images.length); }
@@ -490,10 +503,31 @@
         wrap.addEventListener('click', function () { openAt(i); });
       });
 
-      btnClose.addEventListener('click', close);
-      btnPrev.addEventListener('click', function (e) { e.stopPropagation(); prev(); });
-      btnNext.addEventListener('click', function (e) { e.stopPropagation(); next(); });
+      // Custom directional cursors (SVG data URIs — browser-safe)
+      var svgL = 'data:image/svg+xml,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28"><path d="M18 5L10 14L18 23" stroke="white" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>');
+      var svgR = 'data:image/svg+xml,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28"><path d="M10 5L18 14L10 23" stroke="white" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>');
+      var curL = 'url("' + svgL + '") 14 14, pointer';
+      var curR = 'url("' + svgR + '") 14 14, pointer';
 
+      // Split click: left half = prev, right half = next
+      imgWrap.addEventListener('click', function (e) {
+        e.stopPropagation();
+        if (e.offsetX < imgWrap.offsetWidth / 2) { prev(); } else { next(); }
+      });
+
+      // Cursor changes based on hover position
+      imgWrap.addEventListener('mousemove', function (e) {
+        imgWrap.style.cursor = e.offsetX < imgWrap.offsetWidth / 2 ? curL : curR;
+        dotsEl.classList.remove('faded');
+        clearTimeout(fadeTimer);
+        fadeTimer = setTimeout(function () { dotsEl.classList.add('faded'); }, 1800);
+      });
+
+      imgWrap.addEventListener('mouseleave', function () {
+        imgWrap.style.cursor = '';
+      });
+
+      // Click outside image to close
       overlay.addEventListener('click', function (e) {
         if (e.target === overlay) close();
       });

@@ -223,8 +223,8 @@
           <img src="images/morocco.jpg"      data-href="/morocco"      alt="Morocco">
         </picture>
         <picture>
-          <source srcset="images/bold-agency.webp" type="image/webp">
-          <img src="images/bold-agency.jpg"  data-href="/bold-agency"  alt="Bold Agency">
+          <source srcset="images/bold-mural.webp" type="image/webp">
+          <img src="images/bold-mural.webp"  data-href="/bold-agency"  alt="Bold Agency">
         </picture>
         <picture>
           <source srcset="images/photography.webp" type="image/webp">
@@ -238,6 +238,10 @@
           <source srcset="images/tam.webp" type="image/webp">
           <img src="images/tam.jpg"          data-href="/tam"          alt="TAM">
         </picture>
+        <picture>
+          <source srcset="images/bnw-film.webp" type="image/webp">
+          <img src="images/bnw-film.webp"    data-href="/bnw-film-photo" alt="Series 02 — B&amp;W Film">
+        </picture>
         <!-- Sets 2 & 3 are injected by JS (cloneNode preserves data-href) -->
       </div>
     </div>
@@ -250,7 +254,7 @@
 
     const SPEED    = 0.38;   // px per frame
     const GAP      = 14;     // matches CSS --gap
-    const SET_SIZE = 9;
+    const SET_SIZE = 10;
 
     // Inject clones × 2 so data-href is preserved on every visible image
     (function injectClones() {
