@@ -80,9 +80,24 @@
       margin-top: 20vh;
     }
     .footer-copy { font-size: 13px; color: var(--gray); }
-    .footer-links { display: flex; gap: 28px; }
-    .footer-links a { font-size: 13px; color: var(--gray); transition: color 0.2s; }
-    .footer-links a:hover { color: var(--ink); }
+    .footer-links { display: flex; gap: 4px; }
+    .footer-links a {
+      font-size: 13px; color: var(--gray);
+      padding: 8px 12px;
+      border-radius: 6px;
+      transition: background 0.15s, color 0.15s;
+    }
+    .footer-links a:hover { color: var(--ink); background: var(--border); }
+    @media (max-width: 480px) {
+      .site-footer {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+        padding: 16px;
+      }
+      .footer-links { gap: 0; flex-wrap: wrap; }
+      .footer-links a { padding: 10px 12px; font-size: 14px; }
+    }
 
     .nav-links { display: flex; gap: 28px; justify-self: start; }
     .nav-links a { font-size: 13px; font-weight: 400; color: var(--gray); transition: color 0.2s; }
@@ -176,7 +191,7 @@
       text-transform: uppercase;
       margin-bottom: 28px;
     }
-    .related-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+    .related-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
     .related-item { display: flex; flex-direction: column; gap: 8px; }
     .related-tag { font-size: 10px; font-weight: 300; color: var(--gray); text-transform: uppercase; letter-spacing: 0.08em; }
     .project { display: block; cursor: pointer; }
@@ -189,7 +204,7 @@
     .project-label { padding-top: 8px; }
     .project-name { display: block; font-size: 12px; font-weight: 400; color: var(--ink); line-height: 1.4; }
     .project-type { display: block; font-size: 11px; font-weight: 300; color: var(--gray); margin-top: 1px; }
-    @media (max-width: 480px) { .related-grid { grid-template-columns: 1fr; } }
+    @media (max-width: 480px) { .related-grid { grid-template-columns: repeat(2, 1fr); } }
   </style>
 </head>
 <body>
@@ -305,6 +320,25 @@
               <div class="project-label">
                 <span class="project-name">La Vecchia Signora</span>
                 <span class="project-type">Brand Design</span>
+              </div>
+            </a>
+          </div>
+
+          <div class="related-item">
+            <a href="/tam" class="project related-card">
+              <div class="project-img">
+                <picture>
+                  <source srcset="images/tam.webp" type="image/webp">
+                  <img class="img-a" src="images/tam.jpg" alt="TAM Gratuit Pour Tous" loading="lazy">
+                </picture>
+                <picture>
+                  <source srcset="TamRender/Mockup1.webp" type="image/webp">
+                  <img class="img-b" src="TamRender/Mockup1.png" alt="TAM alternate" loading="lazy" decoding="async">
+                </picture>
+              </div>
+              <div class="project-label">
+                <span class="project-name">TAM Gratuit Pour Tous</span>
+                <span class="project-type">Brand Campaign</span>
               </div>
             </a>
           </div>
