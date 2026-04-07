@@ -95,9 +95,24 @@
       margin-top: 20vh;
     }
     .footer-copy { font-size: 13px; color: var(--gray); }
-    .footer-links { display: flex; gap: 28px; }
-    .footer-links a { font-size: 13px; color: var(--gray); transition: color 0.2s; }
-    .footer-links a:hover { color: var(--ink); }
+    .footer-links { display: flex; gap: 4px; }
+    .footer-links a {
+      font-size: 13px; color: var(--gray);
+      padding: 8px 12px;
+      border-radius: 6px;
+      transition: background 0.15s, color 0.15s;
+    }
+    .footer-links a:hover { color: var(--ink); background: var(--border); }
+    @media (max-width: 480px) {
+      .site-footer {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+        padding: 16px;
+      }
+      .footer-links { gap: 0; flex-wrap: wrap; }
+      .footer-links a { padding: 10px 12px; font-size: 14px; }
+    }
 
     .nav-links {
       display: flex;

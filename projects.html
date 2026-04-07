@@ -90,9 +90,24 @@
       margin-top: 20vh;
     }
     .footer-copy { font-size: 13px; color: var(--gray); }
-    .footer-links { display: flex; gap: 28px; }
-    .footer-links a { font-size: 13px; color: var(--gray); transition: color 0.2s; }
-    .footer-links a:hover { color: var(--ink); }
+    .footer-links { display: flex; gap: 4px; }
+    .footer-links a {
+      font-size: 13px; color: var(--gray);
+      padding: 8px 12px;
+      border-radius: 6px;
+      transition: background 0.15s, color 0.15s;
+    }
+    .footer-links a:hover { color: var(--ink); background: var(--border); }
+    @media (max-width: 480px) {
+      .site-footer {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+        padding: 16px;
+      }
+      .footer-links { gap: 0; flex-wrap: wrap; }
+      .footer-links a { padding: 10px 12px; font-size: 14px; }
+    }
 
     .nav-links {
       display: flex;
@@ -281,6 +296,18 @@
 
     <div class="projects-grid">
 
+      <!-- Series 02 — B&W Film -->
+      <a href="bnw_film_photo.html" class="project">
+        <div class="project-img">
+          <img class="img-a" src="Bnw_film_photo/000021.BMP" alt="Series 02" loading="lazy">
+          <img class="img-b" src="Bnw_film_photo/000009.BMP" alt="Series 02 alternate" loading="lazy" decoding="async">
+        </div>
+        <div class="project-label">
+          <span class="project-name">Series 02</span>
+          <span class="project-type">Photography</span>
+        </div>
+      </a>
+
       <!-- Row A: landscape 4/3 -->
       <a href="/tokyo" class="project">
         <div class="project-img">
@@ -388,11 +415,8 @@
       <!-- Row C: landscape 4/3 -->
       <a href="/photography" class="project">
         <div class="project-img">
-          <picture>
-            <source srcset="images/photography.webp" type="image/webp">
-            <img class="img-a" src="images/photography.jpg" alt="Series 01" loading="lazy">
-          </picture>
-          <img class="img-b" src="https://placehold.co/600x800/dedad4/9a9994?text=Series+01" alt="Series 01 alternate" loading="lazy">
+          <img class="img-a" src="Film_photo/A022232-R1-07-5A.JPG" alt="Series 01" loading="lazy">
+          <img class="img-b" src="Film_photo/A022232-R1-08-7A.JPG" alt="Series 01 alternate" loading="lazy" decoding="async">
         </div>
         <div class="project-label">
           <span class="project-name">Series 01</span>
