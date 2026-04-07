@@ -248,63 +248,7 @@
 
       <div class="related-section">
         <div class="related-heading">Explore more work</div>
-        <div class="related-grid">
-
-          <div class="related-item">
-            <a href="/bold-agency" class="project related-card">
-              <div class="project-img">
-                <picture>
-                  <source srcset="images/bold-agency.webp" type="image/webp">
-                  <img class="img-a" src="images/bold-agency.jpg" alt="Bold Agency" loading="lazy">
-                </picture>
-                <picture>
-                  <source srcset="BoldRender/mockupsite.webp" type="image/webp">
-                  <img class="img-b" src="BoldRender/mockupsite.jpg" alt="Bold Agency alternate" loading="lazy" decoding="async">
-                </picture>
-              </div>
-              <div class="project-label">
-                <span class="project-name">Bold Agency</span>
-                <span class="project-type">Brand Design</span>
-              </div>
-            </a>
-          </div>
-
-          <div class="related-item">
-            <a href="/morocco" class="project related-card">
-              <div class="project-img">
-                <picture>
-                  <source srcset="images/morocco.webp" type="image/webp">
-                  <img class="img-a" src="images/morocco.jpg" alt="Morocco" loading="lazy">
-                </picture>
-                <picture>
-                  <source srcset="03_RENDER/frame2Color.webp" type="image/webp">
-                  <img class="img-b" src="03_RENDER/frame2Color.jpg" alt="Morocco alternate" loading="lazy" decoding="async">
-                </picture>
-              </div>
-              <div class="project-label">
-                <span class="project-name">Morocco</span>
-                <span class="project-type">Video</span>
-              </div>
-            </a>
-          </div>
-
-          <div class="related-item">
-            <a href="/photography" class="project related-card">
-              <div class="project-img">
-                <picture>
-                  <source srcset="images/photography.webp" type="image/webp">
-                  <img class="img-a" src="images/photography.jpg" alt="Series 01" loading="lazy">
-                </picture>
-                <img class="img-b" src="https://placehold.co/600x800/dedad4/9a9994" alt="Series 01 alternate" loading="lazy" decoding="async">
-              </div>
-              <div class="project-label">
-                <span class="project-name">Series 01</span>
-                <span class="project-type">Photography</span>
-              </div>
-            </a>
-          </div>
-
-        </div>
+        <div class="related-grid" id="related-grid"></div>
       </div>
     </div>
   </div>
@@ -337,22 +281,6 @@
         });
       }); });
     }
-
-    // ── RELATED PROJECTS TRANSITION ──
-    document.querySelectorAll('.related-card').forEach(function(link) {
-      link.addEventListener('click', function(e) {
-        e.preventDefault();
-        var href = this.getAttribute('href');
-        var layout = document.querySelector('.body-layout');
-        var spacer = document.querySelector('.spacer');
-        sessionStorage.setItem('vt-from', 'project');
-        [layout, spacer].filter(Boolean).forEach(function(el) {
-          el.style.transition = 'opacity 0.35s ease';
-          el.style.opacity = '0';
-        });
-        setTimeout(function() { window.location.href = href; }, 360);
-      });
-    });
   </script>
 
   <footer class="site-footer">
@@ -383,5 +311,7 @@
     })();
   </script>
   <script src="scripts.js"></script>
+  <script>window.CURRENT_PROJECT = 'tokyo';</script>
+  <script src="projects-data.js"></script>
 </body>
 </html>
